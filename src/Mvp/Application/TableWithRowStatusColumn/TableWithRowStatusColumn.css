@@ -1,0 +1,21 @@
+tr.updating td
+{
+    opacity: 0.5;
+}
+
+td .rpc-status
+{
+    min-width: 16px;
+    min-height: 16px;
+}
+
+tr.updating td .rpc-status
+{
+    opacity: 1;
+    background: url(/static/images/ajax-loader.gif) no-repeat;
+}
+
+tr.updated td .rpc-status
+{
+    background: url(/static/images/success.png) no-repeat;
+}
