@@ -1,5 +1,5 @@
 {
-  "name": "rhubarbphp/module.patterns",
+  "name": "rhubarbphp/module-patterns",
   "description": "Provides some common user interface and design patterns.",
   "keywords": [ "patterns", "rhubarb", "php", "framework" ],
   "homepage": "http://www.rhubarbphp.com/",
