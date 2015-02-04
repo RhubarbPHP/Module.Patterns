@@ -18,7 +18,7 @@
 
 namespace Rhubarb\Patterns\Layouts;
 
-use Rhubarb\Crown\Html\HtmlPageSettings;
+use Rhubarb\Crown\Settings\HtmlPageSettings;
 use Rhubarb\Crown\Html\ResourceLoader;
 use Rhubarb\Crown\Layout\Layout;
 use Rhubarb\Crown\Layout\LayoutModule;
