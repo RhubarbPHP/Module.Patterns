@@ -175,11 +175,11 @@ class UnitTestCrudUrlHandlerTest extends CrudUrlHandler
 {
 	public function GetCollectionPresenterClassName()
 	{
-		return $this->_collectionPresenterClassName;
+		return $this->collectionPresenterClassName;
 	}
 
 	public function GetItemPresenterClassName()
 	{
-		return $this->_itemPresenterClassName;
+		return $this->itemPresenterClassName;
 	}
 }

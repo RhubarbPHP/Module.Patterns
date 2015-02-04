@@ -14,21 +14,21 @@ class ModelFormPresenterTest extends CoreTestCase
 	/**
 	 * @var ModelFormPresenter
 	 */
-	private $_presenter;
+	private $presenter;
 
 	/**
 	 * @var UnitTestView
 	 */
-	private $_view;
+	private $view;
 
 	protected function setUp()
 	{
 		parent::setUp();
 
-		$this->_presenter = new TestModelPresenter();
-		$this->_view = new MockModelPresenterView();
+		$this->presenter = new TestModelPresenter();
+		$this->view = new MockModelPresenterView();
 
-		$this->_presenter->AttachMockView( $this->_view );
+		$this->presenter->AttachMockView( $this->view );
 	}
 
 	public function testSaveButton()
@@ -39,13 +39,13 @@ class ModelFormPresenterTest extends CoreTestCase
 
 		// This next line is just to make sure validation doesn't fail. Validation is tested below
 		// and operates on the presenter model, not the rest model.
-		$this->_presenter->Username = "abc";
+		$this->presenter->Username = "abc";
 
-		$this->_presenter->SetRestModel( $user );
+		$this->presenter->SetRestModel( $user );
 
 		try
 		{
-			$this->_view->SimulateEvent( "SavePressed" );
+			$this->view->SimulateEvent( "SavePressed" );
 
 			$this->fail( "SavePressed should have thrown a ForceResponseException to redirect us" );
 		}
@@ -63,13 +63,13 @@ class ModelFormPresenterTest extends CoreTestCase
 
 		// This next line is just to make sure validation doesn't fail. Validation is tested below
 		// and operates on the presenter model, not the rest model.
-		$this->_presenter->Username = "abc";
+		$this->presenter->Username = "abc";
 
-		$this->_presenter->SetRestModel( $user );
+		$this->presenter->SetRestModel( $user );
 
 		try
 		{
-			$this->_view->SimulateEvent( "CancelPressed" );
+			$this->view->SimulateEvent( "CancelPressed" );
 
 			$this->fail( "SavePressed should have thrown a ForceResponseException to redirect us" );
 		}
@@ -85,9 +85,9 @@ class ModelFormPresenterTest extends CoreTestCase
 		$user = new User();
 		$user->Username = "";
 
-		$this->_presenter->SetRestModel( $user );
+		$this->presenter->SetRestModel( $user );
 
-		$this->_view->SimulateEvent( "SavePressed" );
+		$this->view->SimulateEvent( "SavePressed" );
 
 		$this->assertTrue( $user->IsNewRecord(), "This test should have failed validation so the user should not be saved." );
 	}
