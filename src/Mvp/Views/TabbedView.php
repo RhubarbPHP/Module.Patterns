@@ -36,10 +36,6 @@ trait TabbedView
 
         $handler = ResourceDeploymentHandler::getResourceDeploymentHandler();
 
-        $urlsRequired = [];
-        $urlsRequired[] = ResourceLoader::getJqueryUrl("1.9.1");
-        $urlsRequired[] = ResourceLoader::getJqueryUIUrl("1.10.0");
-
         $url = $handler->deployResource(__DIR__ . "/simple-tabs.js");
 
         $urlsRequired[] = $url;

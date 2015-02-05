@@ -55,7 +55,7 @@ class ModelSearchControl extends SearchControl
         return $item->getLabel();
     }
 
-    protected function gonvertValueToModel($value)
+    protected function convertValueToModel($value)
     {
         if ($value) {
             $object = SolutionSchema::getModel($this->modelClassName, $value);
