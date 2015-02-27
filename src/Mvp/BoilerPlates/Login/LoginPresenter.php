@@ -46,6 +46,24 @@ abstract class LoginPresenter extends Form
         $this->usernameColumnName = $usernameColumnName;
     }
 
+    protected function initialiseModel()
+    {
+        parent::initialiseModel();
+
+        if ( isset( $_GET[ "rd" ] ) )
+        {
+            $this->model->RedirectUrl = $_GET[ "rd" ];
+        }
+    }
+
+    protected function getPublicModelPropertyList()
+    {
+        $list = parent::getPublicModelPropertyList();
+        $list[] = "RedirectUrl";
+
+        return $list;
+    }
+
     protected function createView()
     {
         return new LoginView();
@@ -65,9 +83,17 @@ abstract class LoginPresenter extends Form
 
     protected function onSuccess()
     {
-        $response = new RedirectResponse("/");
+        if ( isset( $this->model->RedirectUrl ) )
+        {
+            $url = base64_decode( $this->model->RedirectUrl );
 
-        throw new ForceResponseException($response);
+            if ( $url )
+            {
+                throw new ForceResponseException(new RedirectResponse($url));
+            }
+        }
+
+        throw new ForceResponseException(new RedirectResponse("/"));
     }
 
     protected function configureView()
