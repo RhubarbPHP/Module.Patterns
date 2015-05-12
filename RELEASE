@@ -1,0 +1,3 @@
+develop
+
+* Fix: TabbedView crashed as ResourceDeploymentHandler had been renamed to ResourceDeploymentProvider
