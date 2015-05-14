@@ -19,6 +19,7 @@
 namespace Rhubarb\Patterns\Mvp\Views;
 
 use Rhubarb\Crown\Deployment\ResourceDeploymentHandler;
+use Rhubarb\Crown\Deployment\ResourceDeploymentProvider;
 use Rhubarb\Crown\Html\ResourceLoader;
 
 trait TabbedView
@@ -34,7 +35,7 @@ trait TabbedView
     {
         $tabs = $this->getTabs();
 
-        $handler = ResourceDeploymentHandler::getResourceDeploymentHandler();
+        $handler = ResourceDeploymentProvider::getResourceDeploymentProvider();
 
         $url = $handler->deployResource(__DIR__ . "/simple-tabs.js");
 
