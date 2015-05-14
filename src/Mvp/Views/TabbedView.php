@@ -18,7 +18,6 @@
 
 namespace Rhubarb\Patterns\Mvp\Views;
 
-use Rhubarb\Crown\Deployment\ResourceDeploymentHandler;
 use Rhubarb\Crown\Deployment\ResourceDeploymentProvider;
 use Rhubarb\Crown\Html\ResourceLoader;
 
