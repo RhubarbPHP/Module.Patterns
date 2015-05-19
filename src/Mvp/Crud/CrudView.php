@@ -26,6 +26,7 @@ use Rhubarb\Patterns\Mvp\Controls\Buttons\PrimaryButton;
 use Rhubarb\Patterns\Mvp\Controls\Buttons\WarningButton;
 use Rhubarb\Stem\Collections\Collection;
 use Rhubarb\Stem\Models\Model;
+use Rhubarb\Stem\Schema\SolutionSchema;
 
 class CrudView extends HtmlView
 {
@@ -59,6 +60,29 @@ class CrudView extends HtmlView
         parent::createPresenters();
     }
 
+    /**
+     * Override this to provide a name for the real world entity being manipulated.
+     * @return string
+     */
+    protected function getEntityName()
+    {
+        $restModel = $this->raiseEvent("GetRestModel");
+
+        if ($restModel instanceof Model) {
+            return StringTools::wordifyStringByUpperCase(
+                SolutionSchema::getModelNameFromClass(get_class($restModel))
+            );
+        }
+
+        if ($restModel instanceof Collection) {
+            return StringTools::wordifyStringByUpperCase(
+                SolutionSchema::getModelNameFromClass($restModel->getModelClassName())
+            );
+        }
+
+        return "";
+    }
+
     protected function onBeforePrintViewContent()
     {
         parent::onBeforePrintViewContent();
@@ -70,13 +94,13 @@ class CrudView extends HtmlView
 
             if ($restModel instanceof Model) {
                 if ($restModel->isNewRecord()) {
-                    $pageSettings->PageTitle = "Add a " . $restModel->getModelName();
+                    $pageSettings->PageTitle = "Add a " . $this->getEntityName();
                 } else {
-                    $pageSettings->PageTitle = "Editing " . $restModel->getModelName() . " '" . $restModel->getLabel(
+                    $pageSettings->PageTitle = "Editing " . $this->getEntityName() . " '" . $restModel->getLabel(
                         ) . "'";
                 }
             } elseif ($restModel instanceof Collection) {
-                $pageSettings->PageTitle = StringTools::pluralise($restModel->getModelName(), 2);
+                $pageSettings->PageTitle = StringTools::pluralise($this->getEntityName(), 2);
             }
         }
     }

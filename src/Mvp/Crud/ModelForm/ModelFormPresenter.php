@@ -130,7 +130,7 @@ class ModelFormPresenter extends MvpRestBoundForm
         $this->view->attachEventHandler(
             "GetRestModel",
             function () {
-                return $this->restModel;
+                return $this->getRestModel();
             }
         );
 
