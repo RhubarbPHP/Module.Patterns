@@ -96,8 +96,7 @@ class CrudView extends HtmlView
                 if ($restModel->isNewRecord()) {
                     $pageSettings->PageTitle = "Add a " . $this->getEntityName();
                 } else {
-                    $pageSettings->PageTitle = "Editing " . $this->getEntityName() . " '" . $restModel->getLabel(
-                        ) . "'";
+                    $pageSettings->PageTitle = "Editing " . $this->getEntityName() . " '" . $restModel->getLabel() . "'";
                 }
             } elseif ($restModel instanceof Collection) {
                 $pageSettings->PageTitle = StringTools::pluralise($this->getEntityName(), 2);

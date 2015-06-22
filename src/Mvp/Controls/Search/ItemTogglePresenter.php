@@ -27,14 +27,14 @@ class ItemTogglePresenter extends SelectionControlPresenter
         return new ItemToggleView();
     }
 
-	protected function parseRequestForCommand()
-	{
-		// ItemTogglePresenters use the model to store their value so don't present an
-		// actual HTML input. In this case we should always indicate we've 'changed' to make sure
-		// model bindings kick in.
+    protected function parseRequestForCommand()
+    {
+        // ItemTogglePresenters use the model to store their value so don't present an
+        // actual HTML input. In this case we should always indicate we've 'changed' to make sure
+        // model bindings kick in.
 
-		$this->setBoundData();
+        $this->setBoundData();
 
-		parent::parseRequestForCommand();
-	}
+        parent::parseRequestForCommand();
+    }
 }

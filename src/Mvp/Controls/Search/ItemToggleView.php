@@ -19,7 +19,6 @@
 namespace Rhubarb\Patterns\Mvp\Controls\Search;
 
 use Rhubarb\Leaf\Presenters\Controls\Selection\SelectionControlView;
-use Rhubarb\Leaf\Views\WithViewBridgeTrait;
 
 class ItemToggleView extends SelectionControlView
 {

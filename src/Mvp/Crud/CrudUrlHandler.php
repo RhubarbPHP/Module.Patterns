@@ -35,7 +35,8 @@ class CrudUrlHandler extends MvpRestHandler
         $namespaceBase,
         $additionalPresenterClassNameMap = [],
         $childUrlHandlers = []
-    ) {
+    )
+    {
         $namespaceBase = rtrim($namespaceBase, "\\");
         $this->namespaceBase = $namespaceBase;
 

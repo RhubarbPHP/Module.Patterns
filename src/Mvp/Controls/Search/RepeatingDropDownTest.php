@@ -7,21 +7,20 @@ use Rhubarb\Crown\UnitTesting\CoreTestCase;
 
 class RepeatingDropDownTest extends CoreTestCase
 {
-	public function testEmptyValuesAreRemoved()
-	{
-		$request = Context::CurrentRequest();
-		$request->Post( "Test", array( 0, 1, 2, 3, 0 ) );
+    public function testEmptyValuesAreRemoved()
+    {
+        $request = Context::CurrentRequest();
+        $request->Post("Test", [0, 1, 2, 3, 0]);
 
-		$result = false;
+        $result = false;
 
-		$dropDown = new RepeatingDropDown( "Test" );
-		$dropDown->AttachEventHandler( "SetBoundData", function( $presenter, $data ) use ( &$result )
-		{
-			$result = $data;
-		});
+        $dropDown = new RepeatingDropDown("Test");
+        $dropDown->AttachEventHandler("SetBoundData", function ($presenter, $data) use (&$result) {
+            $result = $data;
+        });
 
-		$dropDown->GenerateResponse( $request );
+        $dropDown->GenerateResponse($request);
 
-		$this->assertEquals( [1,2,3], $result );
-	}
+        $this->assertEquals([1, 2, 3], $result);
+    }
 }

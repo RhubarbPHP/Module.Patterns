@@ -18,10 +18,10 @@
 
 namespace Rhubarb\Patterns\Layouts;
 
-use Rhubarb\Crown\Settings\HtmlPageSettings;
 use Rhubarb\Crown\Html\ResourceLoader;
 use Rhubarb\Crown\Layout\Layout;
 use Rhubarb\Crown\Layout\LayoutModule;
+use Rhubarb\Crown\Settings\HtmlPageSettings;
 
 class BaseLayout extends Layout
 {
@@ -68,21 +68,21 @@ class BaseLayout extends Layout
     protected function printLayout($content)
     {
         ?>
-<html>
-<head>
-    <title><?= $this->getTitle(); ?></title>
-    <?= LayoutModule::getHeadItemsAsHtml(); ?>
-    <?= ResourceLoader::getResourceInjectionHtml(); ?>
-    <?php $this->printHead(); ?>
-</head>
-<body>
-<?php $this->printTop(); ?>
-<?= LayoutModule::getBodyItemsAsHtml(); ?>
-<?php $this->printPageHeading(); ?>
-<?php $this->printContent($content); ?>
-<?php $this->printTail(); ?>
-</body>
-</html>
+        <html>
+        <head>
+            <title><?= $this->getTitle(); ?></title>
+            <?= LayoutModule::getHeadItemsAsHtml(); ?>
+            <?= ResourceLoader::getResourceInjectionHtml(); ?>
+            <?php $this->printHead(); ?>
+        </head>
+        <body>
+        <?php $this->printTop(); ?>
+        <?= LayoutModule::getBodyItemsAsHtml(); ?>
+        <?php $this->printPageHeading(); ?>
+        <?php $this->printContent($content); ?>
+        <?php $this->printTail(); ?>
+        </body>
+        </html>
     <?php
 
     }

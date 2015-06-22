@@ -85,7 +85,7 @@ trait TabbedView
                     $function = "print" . preg_replace("/\W/", "", $tab);
 
                     if (method_exists($this, $function)) {
-                        call_user_func(array($this, $function));
+                        call_user_func([$this, $function]);
                     }
 
                     print "</div>";

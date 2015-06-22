@@ -50,9 +50,8 @@ abstract class LoginPresenter extends Form
     {
         parent::initialiseModel();
 
-        if ( isset( $_GET[ "rd" ] ) )
-        {
-            $this->model->RedirectUrl = $_GET[ "rd" ];
+        if (isset($_GET["rd"])) {
+            $this->model->RedirectUrl = $_GET["rd"];
         }
     }
 
@@ -83,12 +82,10 @@ abstract class LoginPresenter extends Form
 
     protected function onSuccess()
     {
-        if ( isset( $this->model->RedirectUrl ) )
-        {
-            $url = base64_decode( $this->model->RedirectUrl );
+        if (isset($this->model->RedirectUrl)) {
+            $url = base64_decode($this->model->RedirectUrl);
 
-            if ( $url )
-            {
+            if ($url) {
                 throw new ForceResponseException(new RedirectResponse($url));
             }
         }
