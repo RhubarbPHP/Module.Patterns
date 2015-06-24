@@ -24,6 +24,7 @@ use Rhubarb\Crown\String\StringTools;
 use Rhubarb\Leaf\Presenters\Controls\Buttons\Button;
 use Rhubarb\Leaf\Presenters\Forms\MvpRestBoundForm;
 use Rhubarb\Leaf\Presenters\Presenter;
+use Rhubarb\Stem\Models\Validation\Validator;
 use Rhubarb\Stem\Schema\SolutionSchema;
 
 class ModelFormPresenter extends MvpRestBoundForm
@@ -63,10 +64,10 @@ class ModelFormPresenter extends MvpRestBoundForm
     {
         parent::applyModelToView();
 
-        $this->view->title = $this->getTitle();
+        $this->view->raiseEvent("SetTitle", $this->getTitle());
 
         if ($this->restModel) {
-            $this->view->newModel = $this->restModel->isNewRecord();
+            $this->view->raiseEvent("SetNewModel", $this->restModel->isNewRecord());
         }
     }
 
