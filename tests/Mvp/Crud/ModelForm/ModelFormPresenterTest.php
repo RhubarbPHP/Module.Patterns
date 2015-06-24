@@ -3,13 +3,13 @@
 namespace Rhubarb\Patterns\Mvp\Crud\ModelForm;
 
 use Rhubarb\Crown\Exceptions\ForceResponseException;
-use Rhubarb\Crown\UnitTesting\CoreTestCase;
-use Rhubarb\Leaf\Views\UnitTestView;
+use Rhubarb\Crown\Tests\RhubarbTestCase;
+use Rhubarb\Leaf\Tests\Fixtures\Presenters\UnitTestView;
 use Rhubarb\Stem\Models\Validation\HasValue;
 use Rhubarb\Stem\Models\Validation\Validator;
-use Rhubarb\Stem\UnitTesting\User;
+use Rhubarb\Stem\Tests\Fixtures\User;
 
-class ModelFormPresenterTest extends CoreTestCase
+class ModelFormPresenterTest extends RhubarbTestCase
 {
     /**
      * @var ModelFormPresenter

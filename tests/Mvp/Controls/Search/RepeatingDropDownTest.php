@@ -1,11 +1,12 @@
 <?php
 
-namespace Rhubarb\Patterns\Mvp\Controls\Search;
+namespace Rhubarb\Patterns\Tests\Mvp\Controls\Search;
 
 use Rhubarb\Crown\Context;
-use Rhubarb\Crown\UnitTesting\CoreTestCase;
+use Rhubarb\Crown\Tests\RhubarbTestCase;
+use Rhubarb\Patterns\Mvp\Controls\Search\RepeatingDropDown;
 
-class RepeatingDropDownTest extends CoreTestCase
+class RepeatingDropDownTest extends RhubarbTestCase
 {
     public function testEmptyValuesAreRemoved()
     {

@@ -1,15 +1,16 @@
 <?php
 
-namespace Rhubarb\Patterns\Mvp\BoilerPlates\Login;
+namespace Rhubarb\Patterns\Tests\Mvp\BoilerPlates\Login;
 
-use Rhubarb\Crown\UnitTesting\CoreTestCase;
-use Rhubarb\Leaf\Views\UnitTestView;
-use Rhubarb\Stem\UnitTesting\TestLoginProvider;
-use Rhubarb\Stem\UnitTesting\User;
+use Rhubarb\Crown\Tests\RhubarbTestCase;
+use Rhubarb\Leaf\Tests\Fixtures\Presenters\UnitTestView;
+use Rhubarb\Patterns\Mvp\BoilerPlates\Login\LoginPresenter;
+use Rhubarb\Stem\Tests\Fixtures\TestLoginProvider;
+use Rhubarb\Stem\Tests\Fixtures\User;
 
-CoreTestCase::setUpBeforeClass();
+RhubarbTestCase::setUpBeforeClass();
 
-class LoginPresenterTest extends CoreTestCase
+class LoginPresenterTest extends RhubarbTestCase
 {
     public static function setUpBeforeClass()
     {
@@ -90,8 +91,7 @@ class LoginPresenterUnitTest extends LoginPresenter
 
     public function __construct($name = "")
     {
-        parent::__construct(
-            "Rhubarb\Stem\UnitTesting\TestLoginProvider", "Username", $name);
+        parent::__construct(TestLoginProvider::class, "Username", $name);
     }
 
     protected function onSuccess()

@@ -1,12 +1,13 @@
 <?php
 
-namespace Rhubarb\Patterns\Mvp\Controls\Search;
+namespace Rhubarb\Patterns\Tests\Mvp\Controls\Search;
 
-use Rhubarb\Crown\UnitTesting\CoreTestCase;
-use Rhubarb\Leaf\Views\UnitTestView;
-use Rhubarb\Stem\UnitTesting\User;
+use Rhubarb\Crown\Tests\RhubarbTestCase;
+use Rhubarb\Leaf\Tests\Fixtures\Presenters\UnitTestView;
+use Rhubarb\Patterns\Mvp\Controls\Search\ModelSearchControl;
+use Rhubarb\Stem\Tests\Fixtures\User;
 
-class ModelSearchControlTest extends CoreTestCase
+class ModelSearchControlTest extends RhubarbTestCase
 {
     public static function setUpBeforeClass()
     {
@@ -53,7 +54,7 @@ class UnitTestModelSearchControl extends ModelSearchControl
 {
     public function __construct($name = "")
     {
-        parent::__construct($name, "Rhubarb\Stem\UnitTesting\User");
+        parent::__construct($name, User::class);
     }
 
     public function PublicRaiseEvent()

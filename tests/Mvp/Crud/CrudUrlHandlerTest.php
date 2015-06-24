@@ -1,29 +1,34 @@
 <?php
 
-namespace Rhubarb\Patterns\Mvp\Crud;
+namespace Rhubarb\Patterns\Tests\Mvp\Crud;
 
 use Rhubarb\Crown\Request\WebRequest;
-use Rhubarb\Crown\UnitTesting\CoreTestCase;
-use Rhubarb\Stem\UnitTesting\Company;
-use Rhubarb\Stem\UnitTesting\User;
+use Rhubarb\Crown\String\StringTools;
+use Rhubarb\Crown\Tests\RhubarbTestCase;
+use Rhubarb\Leaf\Tests\Fixtures\Presenters\Cruds\CrudsAddPresenter;
+use Rhubarb\Leaf\Tests\Fixtures\Presenters\Cruds\CrudsCollectionPresenter;
+use Rhubarb\Leaf\Tests\Fixtures\Presenters\Cruds\CrudsDetailsPresenter;
+use Rhubarb\Leaf\Tests\Fixtures\Presenters\Cruds\CrudsItemPresenter;
+use Rhubarb\Leaf\Tests\Fixtures\Presenters\Cruds2\Cruds2EditPresenter;
+use Rhubarb\Leaf\Tests\Fixtures\Presenters\Cruds2\Cruds2ItemPresenter;
+use Rhubarb\Patterns\Mvp\Crud\CrudUrlHandler;
+use Rhubarb\Stem\Tests\Fixtures\Company;
+use Rhubarb\Stem\Tests\Fixtures\Example;
+use Rhubarb\Stem\Tests\Fixtures\User;
 
-class CrudUrlHandlerTest extends CoreTestCase
+class CrudUrlHandlerTest extends RhubarbTestCase
 {
     public function testCrudHandlerUsesFolderName()
     {
-        $crud = new UnitTestCrudUrlHandlerTest(
-            "Rhubarb\Stem\UnitTesting\User",
-            "Rhubarb\Leaf\UnitTesting\Presenters\Cruds");
+        $crud = new UnitTestCrudUrlHandlerTest(User::class, StringTools::getNamespaceFromClass(CrudsCollectionPresenter::class));
 
-        $this->assertEquals("Rhubarb\Leaf\UnitTesting\Presenters\Cruds\CrudsCollectionPresenter", $crud->GetCollectionPresenterClassName());
-        $this->assertEquals("Rhubarb\Leaf\UnitTesting\Presenters\Cruds\CrudsItemPresenter", $crud->GetItemPresenterClassName());
+        $this->assertEquals(CrudsCollectionPresenter::class, $crud->GetCollectionPresenterClassName());
+        $this->assertEquals(CrudsItemPresenter::class, $crud->GetItemPresenterClassName());
     }
 
     public function testCrudHandlerHandlesActions()
     {
-        $crud = new CrudUrlHandler(
-            "Rhubarb\Stem\UnitTesting\User",
-            "Rhubarb\Leaf\UnitTesting\Presenters\Cruds");
+        $crud = new CrudUrlHandler(User::class, StringTools::getNamespaceFromClass(CrudsCollectionPresenter::class));
 
         $crud->SetUrl("/users/");
 
@@ -33,15 +38,12 @@ class CrudUrlHandlerTest extends CoreTestCase
         $request->Server("REQUEST_METHOD", "get");
 
         $response = $crud->GenerateResponse($request);
-        $this->assertInstanceOf("Rhubarb\Leaf\UnitTesting\Presenters\Cruds\CrudsDetailsPresenter", $response->GetGenerator());
+        $this->assertInstanceOf(CrudsDetailsPresenter::class, $response->GetGenerator());
     }
 
     public function testCrudHandlerHandlesAddAction()
     {
-        $crud = new CrudUrlHandler(
-            "Rhubarb\Stem\UnitTesting\User",
-            "Rhubarb\Leaf\UnitTesting\Presenters\Cruds"
-        );
+        $crud = new CrudUrlHandler(User::class, StringTools::getNamespaceFromClass(CrudsCollectionPresenter::class));
 
         $crud->SetUrl("/users/");
 
@@ -52,7 +54,7 @@ class CrudUrlHandlerTest extends CoreTestCase
 
         $response = $crud->GenerateResponse($request);
 
-        $this->assertInstanceOf("Rhubarb\Leaf\UnitTesting\Presenters\Cruds\CrudsAddPresenter", $response->GetGenerator());
+        $this->assertInstanceOf(CrudsAddPresenter::class, $response->GetGenerator());
         $this->assertTrue($response->GetGenerator()->GetRestModel()->IsNewRecord());
     }
 
@@ -62,22 +64,20 @@ class CrudUrlHandlerTest extends CoreTestCase
         $company->CompanyName = "GCD";
         $company->Save();
 
-        $contactsHandler = new CrudUrlHandler(
-            "Rhubarb\Stem\UnitTesting\Example",
-            "Rhubarb\Leaf\UnitTesting\Presenters\Cruds"
-        );
+        $crudsNamespace = StringTools::getNamespaceFromClass(CrudsCollectionPresenter::class);
+        $contactsHandler = new CrudUrlHandler(Example::class, $crudsNamespace);
 
         $usersHandler = new CrudUrlHandler(
-            "Rhubarb\Stem\UnitTesting\User",
-            "Rhubarb\Leaf\UnitTesting\Presenters\Cruds",
+            User::class,
+            $crudsNamespace,
             [],
             [
                 "contacts/" => $contactsHandler
             ]);
 
         $companyHandler = new CrudUrlHandler(
-            "Rhubarb\Stem\UnitTesting\Company",
-            "Rhubarb\Leaf\UnitTesting\Presenters\Cruds",
+            Company::class,
+            $crudsNamespace,
             [],
             [
                 "users/" => $usersHandler
@@ -96,7 +96,7 @@ class CrudUrlHandlerTest extends CoreTestCase
         $model = $usersHandler->getModelObject();
         $model->Save();
 
-        $this->assertInstanceOf("Rhubarb\Stem\UnitTesting\User", $model);
+        $this->assertInstanceOf(User::class, $model);
         $this->assertEquals($company->UniqueIdentifier, $model[$company->UniqueIdentifierColumnName]);
 
         // This is a crazy test coming up. There is no relationship between user and contact objects however we currently
@@ -111,7 +111,7 @@ class CrudUrlHandlerTest extends CoreTestCase
 
         $contact = $contactsHandler->getModelObject();
 
-        $this->assertInstanceOf("Rhubarb\Stem\UnitTesting\Example", $contact);
+        $this->assertInstanceOf(Example::class, $contact);
         $this->assertEquals($company->UniqueIdentifier, $contact[$company->UniqueIdentifierColumnName]);
         $this->assertEquals($model->UniqueIdentifier, $contact[$model->UniqueIdentifierColumnName]);
     }
@@ -119,8 +119,8 @@ class CrudUrlHandlerTest extends CoreTestCase
     public function testAddUrlGetsItemPresenterIfNotAddPresenter()
     {
         $crud = new CrudUrlHandler(
-            "Rhubarb\Stem\UnitTesting\User",
-            "Rhubarb\Leaf\UnitTesting\Presenters\Cruds2"
+            User::class,
+            StringTools::getNamespaceFromClass(Cruds2ItemPresenter::class)
         );
 
         $crud->SetUrl("/users/");
@@ -132,15 +132,15 @@ class CrudUrlHandlerTest extends CoreTestCase
 
         $response = $crud->GenerateResponse($request);
 
-        $this->assertInstanceOf("Rhubarb\Leaf\UnitTesting\Presenters\Cruds2\Cruds2ItemPresenter", $response->GetGenerator());
+        $this->assertInstanceOf(Cruds2ItemPresenter::class, $response->GetGenerator());
         $this->assertTrue($response->GetGenerator()->GetRestModel()->IsNewRecord());
     }
 
     public function testUrlWithBothIDAndActionGetsRelevantPresenter()
     {
         $crud = new CrudUrlHandler(
-            "Rhubarb\Stem\UnitTesting\User",
-            "Rhubarb\Leaf\UnitTesting\Presenters\Cruds2"
+            User::class,
+            StringTools::getNamespaceFromClass(Cruds2ItemPresenter::class)
         );
 
         $crud->SetUrl("/users/");
@@ -156,7 +156,7 @@ class CrudUrlHandlerTest extends CoreTestCase
 
         $response = $crud->GenerateResponse($request);
 
-        $this->assertInstanceOf("Rhubarb\Leaf\UnitTesting\Presenters\Cruds2\Cruds2EditPresenter", $response->GetGenerator());
+        $this->assertInstanceOf(Cruds2EditPresenter::class, $response->GetGenerator());
         $this->assertFalse($response->GetGenerator()->GetRestModel()->IsNewRecord());
         $this->assertEquals("Goat", $response->GetContent());
 
@@ -167,7 +167,7 @@ class CrudUrlHandlerTest extends CoreTestCase
 
         $response = $crud->GenerateResponse($request);
 
-        $this->assertInstanceOf("Rhubarb\Leaf\UnitTesting\Presenters\Cruds2\Cruds2ItemPresenter", $response->GetGenerator());
+        $this->assertInstanceOf(Cruds2ItemPresenter::class, $response->GetGenerator());
     }
 }
 

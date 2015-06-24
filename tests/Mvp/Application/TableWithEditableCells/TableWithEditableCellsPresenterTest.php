@@ -1,15 +1,18 @@
 <?php
 
-namespace Rhubarb\Patterns\Mvp\Application\TableWithEditableCells;
+namespace Rhubarb\Patterns\Tests\Mvp\Application\TableWithEditableCells;
 
-use Rhubarb\Crown\UnitTesting\CoreTestCase;
+use Rhubarb\Crown\Tests\RhubarbTestCase;
+use Rhubarb\Leaf\Presenters\Application\Table\Columns\ModelColumn;
 use Rhubarb\Leaf\Presenters\Application\Table\Columns\Template;
 use Rhubarb\Leaf\Presenters\Controls\Text\TextBox\TextBox;
 use Rhubarb\Leaf\Presenters\Forms\Form;
 use Rhubarb\Leaf\Views\View;
-use Rhubarb\Stem\UnitTesting\Example;
+use Rhubarb\Patterns\Mvp\Application\TableWithEditableCells\EditablePresenterColumn;
+use Rhubarb\Patterns\Mvp\Application\TableWithEditableCells\TableWithEditableCellsPresenter;
+use Rhubarb\Stem\Tests\Fixtures\Example;
 
-class TableWithEditableCellsPresenterTest extends CoreTestCase
+class TableWithEditableCellsPresenterTest extends RhubarbTestCase
 {
     public function testEditablePresenterColumnCreatedWhenGivenAPresenter()
     {
@@ -21,7 +24,7 @@ class TableWithEditableCellsPresenterTest extends CoreTestCase
 
         $columns = $table->PublicInflateColumns();
 
-        $this->assertInstanceOf("Rhubarb\Patterns\Mvp\Application\TableWithEditableCells\EditablePresenterColumn", $columns[0]);
+        $this->assertInstanceOf(EditablePresenterColumn::class, $columns[0]);
     }
 
     public function testTableGetsRowControlsColumn()
@@ -69,7 +72,7 @@ class TableWithEditableCellsPresenterTest extends CoreTestCase
         $host = new MyEditableForm();
         $host->GenerateResponse();
 
-        $this->assertInstanceOf("Rhubarb\Leaf\Presenters\Application\Table\Columns\ModelColumn", MyEditableView::$column->GetShadowColumn());
+        $this->assertInstanceOf(ModelColumn::class, MyEditableView::$column->GetShadowColumn());
     }
 }
 
