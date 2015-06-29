@@ -82,6 +82,11 @@ abstract class LoginPresenter extends Form
 
     protected function onSuccess()
     {
+        if ($this->model["RememberMe"]) {
+            $login = $this->getLoginProvider();
+            $login->rememberLogin();
+        }
+
         if (isset($this->model->RedirectUrl)) {
             $url = base64_decode($this->model->RedirectUrl);
 
