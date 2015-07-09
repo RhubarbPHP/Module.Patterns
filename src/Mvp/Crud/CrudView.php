@@ -116,7 +116,7 @@ class CrudView extends HtmlView
 
                     $label = $restModel->getLabel();
                     if ($label) {
-                        $label = ' "' . $label . '"';
+                        $label = ': ' . $label;
                     }
 
                     $pageSettings->PageTitle = $action . ' ' . $this->getEntityName() . $label;
