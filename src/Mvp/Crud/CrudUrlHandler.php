@@ -30,12 +30,7 @@ class CrudUrlHandler extends MvpRestHandler
 
     private $presenterClassStub;
 
-    public function __construct(
-        $modelName,
-        $namespaceBase,
-        $additionalPresenterClassNameMap = [],
-        $childUrlHandlers = []
-    )
+    public function __construct($modelName, $namespaceBase, $additionalPresenterClassNameMap = [], $childUrlHandlers = [])
     {
         $namespaceBase = rtrim($namespaceBase, "\\");
         $this->namespaceBase = $namespaceBase;
@@ -84,16 +79,14 @@ class CrudUrlHandler extends MvpRestHandler
         return str_replace(" ", "", ucwords(strtolower(str_replace("-", " ", $action))));
     }
 
-
     protected function getPresenterClassName()
     {
         if ($this->urlAction != "") {
             // If the url action is not a number we can only have arrived here if the GetMatchingUrlFragment has already proved
             // that a presenter class is waiting for us...
 
-            $mvpClass = $this->namespaceBase . "\\" . $this->presenterClassStub . $this->makeActionClassFriendly(
-                    $this->urlAction
-                ) . "Presenter";
+            $mvpClass = $this->namespaceBase . "\\" . $this->presenterClassStub .
+                $this->makeActionClassFriendly($this->urlAction) . "Presenter";
 
             if (class_exists($mvpClass)) {
                 return $mvpClass;
@@ -105,13 +98,10 @@ class CrudUrlHandler extends MvpRestHandler
 
     private function checkForPotentialAction($actionName)
     {
-        $potentialClassName = $this->namespaceBase . "\\" . $this->presenterClassStub . $this->makeActionClassFriendly(
-                $actionName
-            ) . "Presenter";
+        $potentialClassName = $this->namespaceBase . "\\" . $this->presenterClassStub .
+            $this->makeActionClassFriendly($actionName) . "Presenter";
 
-        if (class_exists($potentialClassName)) {
-            return true;
-        }
+        return class_exists($potentialClassName);
     }
 
     protected function getMatchingUrlFragment(Request $request, $currentUrlFragment = "")
