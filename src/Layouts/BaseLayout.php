@@ -71,8 +71,10 @@ class BaseLayout extends Layout
         <html>
         <head>
             <title><?= $this->getTitle(); ?></title>
-            <?= LayoutModule::getHeadItemsAsHtml(); ?>
             <?= ResourceLoader::getResourceInjectionHtml(); ?>
+
+            <?= LayoutModule::getHeadItemsAsHtml(); ?>
+
             <?php $this->printHead(); ?>
         </head>
         <body>
