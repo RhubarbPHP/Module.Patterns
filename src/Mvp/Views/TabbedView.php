@@ -30,6 +30,8 @@ trait TabbedView
 
     private static $useCount = 0;
 
+    private $onTabSelectedJs = "";
+
     protected function printViewContent()
     {
         $tabs = $this->getTabs();
@@ -50,7 +52,8 @@ trait TabbedView
 				$( '#tabs{$tabsId}' ).simpleTabs(
 				{
 					setInputFocus: true,
-					appendTabToLocation: true
+					appendTabToLocation: true,
+					$this->onTabSelectedJs
 				} );
 			} );",
             $urlsRequired
@@ -59,18 +62,14 @@ trait TabbedView
         ?>
         <div class="tabs-wrapper">
 
-            <ul id='tabs<?= $tabsId; ?>' class="simple-tab-container simple-tabs">
+            <ul id="tabs<?= $tabsId; ?>" class="simple-tab-container simple-tabs">
                 <?php
 
-                $first = " class='first simple-tab'";
+                $first = ' class="first simple-tab"';
 
                 foreach ($tabs as $tab => $label) {
-                    print '<li' . $first . '><a href="#' . $tabsId . preg_replace(
-                            "/\W/",
-                            "",
-                            $tab
-                        ) . '">' . $label . '</a></li>';
-                    $first = " class='simple-tab'";
+                    print '<li' . $first . '><a href="#' . $tabsId . preg_replace('/\W/', '', $tab) . '">' . $label . '</a></li>';
+                    $first = ' class="simple-tab"';
                 }
 
                 ?>
@@ -80,9 +79,11 @@ trait TabbedView
                 <?php
 
                 foreach ($tabs as $tab => $label) {
-                    print "<div id='$tabsId$tab' class='standard-form simple-tab-panel'>";
+                    print <<<HTML
+                        <div id="$tabsId$tab" class="standard-form simple-tab-panel">
+HTML;
 
-                    $function = "print" . preg_replace("/\W/", "", $tab);
+                    $function = "print" . preg_replace('/\W/', '', $tab);
 
                     if (method_exists($this, $function)) {
                         call_user_func([$this, $function]);
@@ -96,6 +97,20 @@ trait TabbedView
 
             <div class="clear-floats"></div>
         </div>
-    <?php
+        <?php
+    }
+
+    /**
+     * Provides a snippet of JavaScript which will be executed when a tab is selected.
+     * A JavaScript variable named panelName will be available to this code.
+     *
+     * @param string $onTabSelectedJs
+     */
+    public function setOnTabSelectedJs($onTabSelectedJs)
+    {
+        $this->onTabSelectedJs = "
+            onTabSelected: function(panelName) {
+                $onTabSelectedJs;
+            }";
     }
 }
