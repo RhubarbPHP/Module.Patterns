@@ -18,9 +18,12 @@
 
 namespace Rhubarb\Patterns\Mvp\Crud;
 
+use Rhubarb\Crown\Context;
 use Rhubarb\Crown\Settings\HtmlPageSettings;
 use Rhubarb\Crown\String\StringTools;
+use Rhubarb\Crown\UrlHandlers\UrlHandler;
 use Rhubarb\Leaf\Presenters\Controls\Buttons\Button;
+use Rhubarb\Leaf\UrlHandlers\MvpRestHandler;
 use Rhubarb\Leaf\Views\HtmlView;
 use Rhubarb\Patterns\Mvp\Controls\Buttons\PrimaryButton;
 use Rhubarb\Patterns\Mvp\Controls\Buttons\WarningButton;
@@ -108,7 +111,27 @@ class CrudView extends HtmlView
                 if ($restModel->isNewRecord()) {
                     $pageSettings->PageTitle = "Add a " . $this->getEntityName();
                 } else {
-                    $pageSettings->PageTitle = "Editing " . $this->getEntityName() . " '" . $restModel->getLabel() . "'";
+                    $urlHandler = UrlHandler::getExecutingUrlHandler();
+
+                    if ($urlHandler instanceof MvpRestHandler) {
+                        $action = $urlHandler->getUrlAction();
+                        if (is_numeric($action)) {
+                            $action = "";
+                        } else if (empty($action)) {
+                            $action = "Editing ";
+                        } else {
+                            $action .= " ";
+                        }
+                    } else {
+                        $action = "Editing ";
+                    }
+
+                    $label = $restModel->getLabel();
+                    if ($label) {
+                        $label = ': ' . $label;
+                    }
+
+                    $pageSettings->PageTitle = $action . ' ' . $this->getEntityName() . $label;
                 }
             } elseif ($restModel instanceof Collection) {
                 $pageSettings->PageTitle = StringTools::pluralise($this->getEntityName(), 2);

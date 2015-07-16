@@ -10,12 +10,6 @@
       "Rhubarb\\Patterns\\Tests\\": "tests/"
     }
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/acuthbert/rhubarb"
-    }
-  ],
   "require": {
     "rhubarbphp/rhubarb": "*",
     "rhubarbphp/module-stem": "*"
