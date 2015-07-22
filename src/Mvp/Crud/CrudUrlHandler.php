@@ -112,7 +112,7 @@ class CrudUrlHandler extends MvpRestHandler
 
         $this->isCollection = true;
 
-        if (preg_match("|^" . $this->url . "([0-9]+)/([a-zA-Z0-9]+)|", $uri, $matches)) {
+        if (preg_match("|^" . $this->url . "([0-9]+)/([a-zA-Z0-9\-]+)|", $uri, $matches)) {
             if ($this->checkForPotentialAction($matches[2])) {
                 $this->urlAction = $matches[2];
                 $this->isCollection = false;
