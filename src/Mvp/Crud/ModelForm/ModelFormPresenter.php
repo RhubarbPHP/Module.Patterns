@@ -105,6 +105,12 @@ class ModelFormPresenter extends MvpRestBoundForm
         $this->redirectAfterCancel();
     }
 
+    protected function delete()
+    {
+        $this->restModel->delete();
+        $this->redirectAfterSave();
+    }
+
     protected function onPresenterAdded(Presenter $presenter)
     {
         if ($presenter->getName() == "Save") {
@@ -145,6 +151,13 @@ class ModelFormPresenter extends MvpRestBoundForm
             "CancelPressed",
             function () {
                 $this->cancel();
+            }
+        );
+
+        $this->view->attachEventHandler(
+            "DeletePressed",
+            function () {
+                $this->delete();
             }
         );
     }
