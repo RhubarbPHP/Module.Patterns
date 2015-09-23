@@ -24,6 +24,7 @@ use Rhubarb\Crown\String\StringTools;
 use Rhubarb\Leaf\Presenters\Controls\Buttons\Button;
 use Rhubarb\Leaf\Presenters\Forms\MvpRestBoundForm;
 use Rhubarb\Leaf\Presenters\Presenter;
+use Rhubarb\Stem\Models\Validation\Validator;
 use Rhubarb\Stem\Schema\SolutionSchema;
 
 class ModelFormPresenter extends MvpRestBoundForm
@@ -88,7 +89,7 @@ class ModelFormPresenter extends MvpRestBoundForm
 
     protected final function save()
     {
-        $validator = $this->createDefaultValidator();
+        $validator = $this->getDefaultValidator();
 
         if ($validator && $validator instanceof Validator) {
             if (!$this->validate($validator)) {
