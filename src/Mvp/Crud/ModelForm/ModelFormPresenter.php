@@ -116,7 +116,7 @@ class ModelFormPresenter extends MvpRestBoundForm
     {
         if ($presenter->getName() == "Save") {
             if ($presenter instanceof Button) {
-                $presenter->validator = $this->createDefaultClientSideValidator();
+                $presenter->validator = $this->getDefaultClientSideValidator();
             }
         }
 
