@@ -82,11 +82,6 @@ abstract class LoginPresenter extends Form
 
     protected function onSuccess()
     {
-        if ($this->model["RememberMe"]) {
-            $login = $this->getLoginProvider();
-            $login->rememberLogin();
-        }
-
         if (isset($this->model->RedirectUrl)) {
             $url = base64_decode($this->model->RedirectUrl);
 
@@ -113,6 +108,12 @@ abstract class LoginPresenter extends Form
                     $usernameColumn = $this->usernameColumnName;
 
                     if ($login->login($this->$usernameColumn, $this->Password)) {
+
+                        if ($this->model["RememberMe"]) {
+                            $login = $this->getLoginProvider();
+                            $login->rememberLogin();
+                        }
+
                         $this->onSuccess();
                     }
                 } catch (LoginDisabledException $er) {
