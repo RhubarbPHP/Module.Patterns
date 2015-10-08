@@ -89,7 +89,7 @@ class ModelFormPresenter extends MvpRestBoundForm
 
     protected final function save()
     {
-        $validator = $this->getDefaultValidator();
+        $validator = $this->createDefaultValidator();
 
         if ($validator && $validator instanceof Validator) {
             if (!$this->validate($validator)) {
@@ -116,7 +116,7 @@ class ModelFormPresenter extends MvpRestBoundForm
     {
         if ($presenter->getName() == "Save") {
             if ($presenter instanceof Button) {
-                $presenter->validator = $this->getDefaultClientSideValidator();
+                $presenter->validator = $this->createDefaultClientSideValidator();
             }
         }
 
