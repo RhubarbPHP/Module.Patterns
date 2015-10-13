@@ -112,7 +112,7 @@ class CrudUrlHandler extends MvpRestHandler
 
         $this->isCollection = true;
 
-        if (preg_match("|^" . $this->url . "([0-9]+)/([a-zA-Z0-9\-]+)|", $uri, $matches)) {
+        if (preg_match("|^" . $this->url . "([^/]+)/([a-zA-Z0-9\-]+)|", $uri, $matches)) {
             if ($this->checkForPotentialAction($matches[2])) {
                 $this->urlAction = $matches[2];
                 $this->isCollection = false;
@@ -122,34 +122,29 @@ class CrudUrlHandler extends MvpRestHandler
         }
 
         if (preg_match("|^" . $this->url . "([^/]+)/|", $uri, $match)) {
-            if (!is_numeric($match[1])) {
-                $found = false;
+            $found = false;
 
-                if ($match[1] == "add") {
-                    // Make sure that when adding we get a model object not a collection object.
-                    $this->isCollection = false;
-                }
+            if ($match[1] == "add") {
+                // Make sure that when adding we get a model object not a collection object.
+                $this->isCollection = false;
+            }
 
-                if ($this->checkForPotentialAction($match[1])) {
+            if ($this->checkForPotentialAction($match[1])) {
+                $found = true;
+            } elseif ($match[1] == "add") {
+                if ($this->checkForPotentialAction("Item")) {
                     $found = true;
-                } elseif ($match[1] == "add") {
-                    if ($this->checkForPotentialAction("Item")) {
-                        $found = true;
-                    }
-                }
-
-                if ($found) {
-                    $this->urlAction = $match[1];
-
-                    return $match[0];
                 }
             }
 
-            if (is_numeric($match[1])) {
+            if ($found) {
                 $this->urlAction = $match[1];
-
                 return $match[0];
             }
+
+            $this->resourceIdentifier = $this->urlAction = $match[1];
+            $this->isCollection = false;
+            return $match[0];
         }
 
         return $parentResponse;
