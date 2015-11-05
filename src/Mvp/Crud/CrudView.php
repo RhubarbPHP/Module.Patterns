@@ -105,7 +105,7 @@ class CrudView extends HtmlView
                         $action = $urlHandler->getUrlAction();
                         if (is_numeric($action)) {
                             $action = "";
-                        } else if (empty($action)) {
+                        } else if (empty($action) || $action == "edit") {
                             $action = "Editing ";
                         } else {
                             $action .= " ";
