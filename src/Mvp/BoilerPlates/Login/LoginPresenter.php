@@ -90,7 +90,26 @@ abstract class LoginPresenter extends Form
             }
         }
 
-        throw new ForceResponseException(new RedirectResponse("/"));
+        throw new ForceResponseException(new RedirectResponse($this->getDefaultSuccessUrl()));
+    }
+
+    protected function getDefaultSuccessUrl()
+    {
+        return "/";
+    }
+
+    /**
+     * Called just before the view is rendered.
+     *
+     * Guaranteed to only be called once during a normal page execution.
+     */
+    protected function beforeRenderView()
+    {
+        $login = $this->getLoginProvider();
+
+        if ( $login->isLoggedIn() ){
+            $this->onSuccess();
+        }
     }
 
     protected function configureView()
