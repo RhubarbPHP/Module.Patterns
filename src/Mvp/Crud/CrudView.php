@@ -18,7 +18,6 @@
 
 namespace Rhubarb\Patterns\Mvp\Crud;
 
-use Rhubarb\Crown\Context;
 use Rhubarb\Crown\Settings\HtmlPageSettings;
 use Rhubarb\Crown\String\StringTools;
 use Rhubarb\Crown\UrlHandlers\UrlHandler;
@@ -102,14 +101,7 @@ class CrudView extends HtmlView
                     $urlHandler = UrlHandler::getExecutingUrlHandler();
 
                     if ($urlHandler instanceof MvpRestHandler) {
-                        $action = $urlHandler->getUrlAction();
-                        if (is_numeric($action)) {
-                            $action = "";
-                        } else if (empty($action) || $action == "edit") {
-                            $action = "Editing ";
-                        } else {
-                            $action .= " ";
-                        }
+                        $action = $this->describeUrlAction($urlHandler->getUrlAction());
                     } else {
                         $action = "Editing ";
                     }
@@ -125,5 +117,20 @@ class CrudView extends HtmlView
                 $pageSettings->PageTitle = StringTools::pluralise($this->getEntityName(), 2);
             }
         }
+    }
+
+    protected function describeUrlAction($action)
+    {
+        if (is_numeric($action)) {
+            $action = '';
+        } else {
+            if (empty($action) || $action == 'edit') {
+                $action = 'Editing ';
+            } else {
+                $action .= ' ';
+            }
+        }
+
+        return $action;
     }
 }
