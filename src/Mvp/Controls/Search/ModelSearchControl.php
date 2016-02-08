@@ -82,7 +82,7 @@ class ModelSearchControl extends SearchControl
         $results = [];
 
         foreach ($list as $item) {
-            $result = $this->makeItem($item->getUniqueIdentifier(), $item->getLabel(), $this->getDataForItem($item));
+            $result = $this->makeItem($item->getUniqueIdentifier(), $this->getLabelForItem($item), $this->getDataForItem($item));
             $results[] = $result;
         }
 

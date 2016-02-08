@@ -82,11 +82,6 @@ abstract class LoginPresenter extends Form
 
     protected function onSuccess()
     {
-        if ($this->model["RememberMe"]) {
-            $login = $this->getLoginProvider();
-            $login->rememberLogin();
-        }
-
         if (isset($this->model->RedirectUrl)) {
             $url = base64_decode($this->model->RedirectUrl);
 
@@ -95,7 +90,26 @@ abstract class LoginPresenter extends Form
             }
         }
 
-        throw new ForceResponseException(new RedirectResponse("/"));
+        throw new ForceResponseException(new RedirectResponse($this->getDefaultSuccessUrl()));
+    }
+
+    protected function getDefaultSuccessUrl()
+    {
+        return "/";
+    }
+
+    /**
+     * Called just before the view is rendered.
+     *
+     * Guaranteed to only be called once during a normal page execution.
+     */
+    protected function beforeRenderView()
+    {
+        $login = $this->getLoginProvider();
+
+        if ( $login->isLoggedIn() ){
+            $this->onSuccess();
+        }
     }
 
     protected function configureView()
@@ -113,6 +127,12 @@ abstract class LoginPresenter extends Form
                     $usernameColumn = $this->usernameColumnName;
 
                     if ($login->login($this->$usernameColumn, $this->Password)) {
+
+                        if ($this->model["RememberMe"]) {
+                            $login = $this->getLoginProvider();
+                            $login->rememberLogin();
+                        }
+
                         $this->onSuccess();
                     }
                 } catch (LoginDisabledException $er) {
