@@ -98,6 +98,10 @@ class CrudUrlHandler extends MvpRestHandler
 
     private function checkForPotentialAction($actionName)
     {
+        if (isset($this->additionalPresenterClassNameMap[$actionName])) {
+            return true;
+        }
+
         $potentialClassName = $this->namespaceBase . "\\" . $this->presenterClassStub .
             $this->makeActionClassFriendly($actionName) . "Presenter";
 
@@ -112,7 +116,7 @@ class CrudUrlHandler extends MvpRestHandler
 
         $this->isCollection = true;
 
-        if (preg_match("|^" . $this->url . "([0-9]+)/([a-zA-Z0-9\-]+)|", $uri, $matches)) {
+        if (preg_match('|^' . $this->url . '([0-9]+)/([a-zA-Z0-9\-]+)|', $uri, $matches)) {
             if ($this->checkForPotentialAction($matches[2])) {
                 $this->urlAction = $matches[2];
                 $this->isCollection = false;
@@ -121,7 +125,7 @@ class CrudUrlHandler extends MvpRestHandler
             }
         }
 
-        if (preg_match("|^" . $this->url . "([^/]+)/|", $uri, $match)) {
+        if (preg_match('|^' . $this->url . '([^/]+)/|', $uri, $match)) {
             if (!is_numeric($match[1])) {
                 $found = false;
 
