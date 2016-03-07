@@ -107,6 +107,10 @@ abstract class LoginPresenter extends Form
     {
         $login = $this->getLoginProvider();
 
+        if (isset($_GET["logout"])) {
+            $login->logOut();
+        }
+
         if ( $login->isLoggedIn() ){
             $this->onSuccess();
         }
