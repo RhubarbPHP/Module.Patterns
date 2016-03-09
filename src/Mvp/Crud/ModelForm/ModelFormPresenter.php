@@ -64,10 +64,10 @@ class ModelFormPresenter extends MvpRestBoundForm
     {
         parent::applyModelToView();
 
-        $this->view->title = $this->getTitle();
+        $this->view->raiseEvent("SetTitle", $this->getTitle());
 
         if ($this->restModel) {
-            $this->view->newModel = $this->restModel->isNewRecord();
+            $this->view->raiseEvent("SetNewModel", $this->restModel->isNewRecord());
         }
     }
 

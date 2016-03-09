@@ -37,18 +37,13 @@ class LoginView extends HtmlView
             new TextBox($this->usernameColumnName),
             new Password("Password"),
             new Button("Login", "Login", function () {
-                $this->raiseEvent("AttemptLogin");
+                return $this->raiseEvent("AttemptLogin");
             })
         );
     }
 
     public function printViewContent()
     {
-        ?>
-
-
-        <?php
-
         if ($this->failed) {
             print "<div class='c-alert c-alert--error'>Sorry, this username and password combination could not be found, please check and try again.</div>";
         }
@@ -84,21 +79,18 @@ class LoginView extends HtmlView
             ?>
         </fieldset>
 
-    <?php
+        <?php
     }
 
     protected function printAdditionalBeforeForm()
     {
-
     }
 
     protected function printAdditionalBeforeButton()
     {
-
     }
 
     protected function printAdditionalAfterButton()
     {
-
     }
 }
