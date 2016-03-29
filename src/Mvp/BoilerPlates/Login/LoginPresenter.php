@@ -107,7 +107,7 @@ abstract class LoginPresenter extends Form
     {
         $login = $this->getLoginProvider();
 
-        if ( $login->isLoggedIn() ){
+        if ($login->isLoggedIn()) {
             $this->onSuccess();
         }
     }

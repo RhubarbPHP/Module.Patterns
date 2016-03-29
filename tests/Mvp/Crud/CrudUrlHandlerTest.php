@@ -22,47 +22,47 @@ class CrudUrlHandlerTest extends RhubarbTestCase
     {
         $crud = new UnitTestCrudUrlHandlerTest(User::class, StringTools::getNamespaceFromClass(CrudsCollectionPresenter::class));
 
-        $this->assertEquals(CrudsCollectionPresenter::class, $crud->GetCollectionPresenterClassName());
-        $this->assertEquals(CrudsItemPresenter::class, $crud->GetItemPresenterClassName());
+        $this->assertEquals(CrudsCollectionPresenter::class, $crud->getCollectionPresenterClassName());
+        $this->assertEquals(CrudsItemPresenter::class, $crud->getItemPresenterClassName());
     }
 
     public function testCrudHandlerHandlesActions()
     {
         $crud = new CrudUrlHandler(User::class, StringTools::getNamespaceFromClass(CrudsCollectionPresenter::class));
 
-        $crud->SetUrl("/users/");
+        $crud->setUrl("/users/");
 
         $request = new WebRequest();
         $request->UrlPath = "/users/details/";
-        $request->Server("HTTP_ACCEPT", "text/html");
-        $request->Server("REQUEST_METHOD", "get");
+        $request->server("HTTP_ACCEPT", "text/html");
+        $request->server("REQUEST_METHOD", "get");
 
-        $response = $crud->GenerateResponse($request);
-        $this->assertInstanceOf(CrudsDetailsPresenter::class, $response->GetGenerator());
+        $response = $crud->generateResponse($request);
+        $this->assertInstanceOf(CrudsDetailsPresenter::class, $response->getGenerator());
     }
 
     public function testCrudHandlerHandlesAddAction()
     {
         $crud = new CrudUrlHandler(User::class, StringTools::getNamespaceFromClass(CrudsCollectionPresenter::class));
 
-        $crud->SetUrl("/users/");
+        $crud->setUrl("/users/");
 
         $request = new WebRequest();
         $request->UrlPath = "/users/add/";
-        $request->Server("HTTP_ACCEPT", "text/html");
-        $request->Server("REQUEST_METHOD", "get");
+        $request->server("HTTP_ACCEPT", "text/html");
+        $request->server("REQUEST_METHOD", "get");
 
-        $response = $crud->GenerateResponse($request);
+        $response = $crud->generateResponse($request);
 
-        $this->assertInstanceOf(CrudsAddPresenter::class, $response->GetGenerator());
-        $this->assertTrue($response->GetGenerator()->GetRestModel()->IsNewRecord());
+        $this->assertInstanceOf(CrudsAddPresenter::class, $response->getGenerator());
+        $this->assertTrue($response->getGenerator()->getRestModel()->isNewRecord());
     }
 
     public function testNewModelHasRelationshipFieldsPopulated()
     {
         $company = new Company();
         $company->CompanyName = "GCD";
-        $company->Save();
+        $company->save();
 
         $crudsNamespace = StringTools::getNamespaceFromClass(CrudsCollectionPresenter::class);
         $contactsHandler = new CrudUrlHandler(Example::class, $crudsNamespace);
@@ -83,18 +83,18 @@ class CrudUrlHandlerTest extends RhubarbTestCase
                 "users/" => $usersHandler
             ]);
 
-        $companyHandler->SetUrl("/companies/");
+        $companyHandler->setUrl("/companies/");
 
         $request = new WebRequest();
-        $request->Server("HTTP_ACCEPT", "text/html");
-        $request->Server("REQUEST_METHOD", "get");
+        $request->server("HTTP_ACCEPT", "text/html");
+        $request->server("REQUEST_METHOD", "get");
         $request->UrlPath = "/companies/" . $company->CompanyID . "/users/add/";
 
         // Make sure the request is parsed.
-        $companyHandler->GenerateResponse($request);
+        $companyHandler->generateResponse($request);
 
         $model = $usersHandler->getModelObject();
-        $model->Save();
+        $model->save();
 
         $this->assertInstanceOf(User::class, $model);
         $this->assertEquals($company->UniqueIdentifier, $model[$company->UniqueIdentifierColumnName]);
@@ -107,7 +107,7 @@ class CrudUrlHandlerTest extends RhubarbTestCase
         $request->UrlPath = "/companies/" . $company->CompanyID . "/users/" . $model->UniqueIdentifier . "/contacts/add/";
 
         // Make sure the request is parsed.
-        $companyHandler->GenerateResponse($request);
+        $companyHandler->generateResponse($request);
 
         $contact = $contactsHandler->getModelObject();
 
@@ -123,17 +123,17 @@ class CrudUrlHandlerTest extends RhubarbTestCase
             StringTools::getNamespaceFromClass(Cruds2ItemPresenter::class)
         );
 
-        $crud->SetUrl("/users/");
+        $crud->setUrl("/users/");
 
         $request = new WebRequest();
         $request->UrlPath = "/users/add/";
-        $request->Server("HTTP_ACCEPT", "text/html");
-        $request->Server("REQUEST_METHOD", "get");
+        $request->server("HTTP_ACCEPT", "text/html");
+        $request->server("REQUEST_METHOD", "get");
 
-        $response = $crud->GenerateResponse($request);
+        $response = $crud->generateResponse($request);
 
-        $this->assertInstanceOf(Cruds2ItemPresenter::class, $response->GetGenerator());
-        $this->assertTrue($response->GetGenerator()->GetRestModel()->IsNewRecord());
+        $this->assertInstanceOf(Cruds2ItemPresenter::class, $response->getGenerator());
+        $this->assertTrue($response->getGenerator()->getRestModel()->isNewRecord());
     }
 
     public function testUrlWithBothIDAndActionGetsRelevantPresenter()
@@ -143,42 +143,42 @@ class CrudUrlHandlerTest extends RhubarbTestCase
             StringTools::getNamespaceFromClass(Cruds2ItemPresenter::class)
         );
 
-        $crud->SetUrl("/users/");
+        $crud->setUrl("/users/");
 
         $user = new User();
         $user->Forename = "Goat";
-        $user->Save();
+        $user->save();
 
         $request = new WebRequest();
         $request->UrlPath = "/users/" . $user->UniqueIdentifier . "/edit/";
-        $request->Server("HTTP_ACCEPT", "text/html");
-        $request->Server("REQUEST_METHOD", "get");
+        $request->server("HTTP_ACCEPT", "text/html");
+        $request->server("REQUEST_METHOD", "get");
 
-        $response = $crud->GenerateResponse($request);
+        $response = $crud->generateResponse($request);
 
-        $this->assertInstanceOf(Cruds2EditPresenter::class, $response->GetGenerator());
-        $this->assertFalse($response->GetGenerator()->GetRestModel()->IsNewRecord());
-        $this->assertEquals("Goat", $response->GetContent());
+        $this->assertInstanceOf(Cruds2EditPresenter::class, $response->getGenerator());
+        $this->assertFalse($response->getGenerator()->getRestModel()->isNewRecord());
+        $this->assertEquals("Goat", $response->getContent());
 
         $request = new WebRequest();
         $request->UrlPath = "/users/" . $user->UniqueIdentifier . "/";
-        $request->Server("HTTP_ACCEPT", "text/html");
-        $request->Server("REQUEST_METHOD", "get");
+        $request->server("HTTP_ACCEPT", "text/html");
+        $request->server("REQUEST_METHOD", "get");
 
-        $response = $crud->GenerateResponse($request);
+        $response = $crud->generateResponse($request);
 
-        $this->assertInstanceOf(Cruds2ItemPresenter::class, $response->GetGenerator());
+        $this->assertInstanceOf(Cruds2ItemPresenter::class, $response->getGenerator());
     }
 }
 
 class UnitTestCrudUrlHandlerTest extends CrudUrlHandler
 {
-    public function GetCollectionPresenterClassName()
+    public function getCollectionPresenterClassName()
     {
         return $this->collectionPresenterClassName;
     }
 
-    public function GetItemPresenterClassName()
+    public function getItemPresenterClassName()
     {
         return $this->itemPresenterClassName;
     }

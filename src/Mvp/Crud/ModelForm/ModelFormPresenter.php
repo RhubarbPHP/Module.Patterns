@@ -44,7 +44,7 @@ class ModelFormPresenter extends MvpRestBoundForm
                         StringTools::wordifyStringByUpperCase(
                             SolutionSchema::getModelNameFromClass(get_class($this->restModel))
                         )
-                    ) . " '" . $this->restModel->GetLabel() . "'"
+                    ) . " '" . $this->restModel->getLabel() . "'"
                 );
             }
         } else {
