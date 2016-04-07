@@ -2,7 +2,7 @@
 
 namespace Rhubarb\Patterns\Tests\Mvp\Application\TableWithEditableCells;
 
-use Rhubarb\Crown\Tests\RhubarbTestCase;
+use Rhubarb\Crown\Tests\Fixtures\TestCases\RhubarbTestCase;
 use Rhubarb\Leaf\Presenters\Application\Table\Columns\ModelColumn;
 use Rhubarb\Leaf\Presenters\Application\Table\Columns\Template;
 use Rhubarb\Leaf\Presenters\Controls\Text\TextBox\TextBox;
@@ -10,7 +10,7 @@ use Rhubarb\Leaf\Presenters\Forms\Form;
 use Rhubarb\Leaf\Views\View;
 use Rhubarb\Patterns\Mvp\Application\TableWithEditableCells\EditablePresenterColumn;
 use Rhubarb\Patterns\Mvp\Application\TableWithEditableCells\TableWithEditableCellsPresenter;
-use Rhubarb\Stem\Tests\Fixtures\Example;
+use Rhubarb\Stem\Tests\unit\Fixtures\Example;
 
 class TableWithEditableCellsPresenterTest extends RhubarbTestCase
 {
@@ -72,7 +72,7 @@ class TableWithEditableCellsPresenterTest extends RhubarbTestCase
         $host = new MyEditableForm();
         $host->GenerateResponse();
 
-        $this->assertInstanceOf(ModelColumn::class, MyEditableView::$column->GetShadowColumn());
+        $this->assertInstanceOf(ModelColumn::class, MyEditableView::$column->getShadowColumn());
     }
 }
 

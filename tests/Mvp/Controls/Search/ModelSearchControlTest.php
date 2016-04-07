@@ -2,10 +2,10 @@
 
 namespace Rhubarb\Patterns\Tests\Mvp\Controls\Search;
 
-use Rhubarb\Crown\Tests\RhubarbTestCase;
+use Rhubarb\Crown\Tests\Fixtures\TestCases\RhubarbTestCase;
 use Rhubarb\Leaf\Tests\Fixtures\Presenters\UnitTestView;
 use Rhubarb\Patterns\Mvp\Controls\Search\ModelSearchControl;
-use Rhubarb\Stem\Tests\Fixtures\User;
+use Rhubarb\Stem\Tests\unit\Fixtures\User;
 
 class ModelSearchControlTest extends RhubarbTestCase
 {

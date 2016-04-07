@@ -36,7 +36,7 @@ trait TabbedView
     {
         $tabs = $this->getTabs();
 
-        $handler = ResourceDeploymentProvider::getResourceDeploymentProvider();
+        $handler = ResourceDeploymentProvider::getProvider();
 
         $url = $handler->deployResource(__DIR__ . "/simple-tabs.js");
 

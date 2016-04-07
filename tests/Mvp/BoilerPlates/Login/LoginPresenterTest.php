@@ -2,13 +2,11 @@
 
 namespace Rhubarb\Patterns\Tests\Mvp\BoilerPlates\Login;
 
-use Rhubarb\Crown\Tests\RhubarbTestCase;
+use Rhubarb\Crown\Tests\Fixtures\TestCases\RhubarbTestCase;
 use Rhubarb\Leaf\Tests\Fixtures\Presenters\UnitTestView;
 use Rhubarb\Patterns\Mvp\BoilerPlates\Login\LoginPresenter;
-use Rhubarb\Stem\Tests\Fixtures\TestLoginProvider;
-use Rhubarb\Stem\Tests\Fixtures\User;
-
-RhubarbTestCase::setUpBeforeClass();
+use Rhubarb\Stem\Tests\unit\Fixtures\TestLoginProvider;
+use Rhubarb\Stem\Tests\unit\Fixtures\User;
 
 class LoginPresenterTest extends RhubarbTestCase
 {

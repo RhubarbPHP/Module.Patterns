@@ -92,11 +92,11 @@ class CrudView extends HtmlView
         $restModel = $this->raiseEvent("GetRestModel");
 
         if (is_object($restModel)) {
-            $pageSettings = new HtmlPageSettings();
+            $pageSettings = HtmlPageSettings::singleton();
 
             if ($restModel instanceof Model) {
                 if ($restModel->isNewRecord()) {
-                    $pageSettings->PageTitle = "Add a " . $this->getEntityName();
+                    $pageSettings->pageTitle = "Add a " . $this->getEntityName();
                 } else {
                     $urlHandler = UrlHandler::getExecutingUrlHandler();
 
@@ -111,10 +111,10 @@ class CrudView extends HtmlView
                         $label = ': ' . $label;
                     }
 
-                    $pageSettings->PageTitle = $action . ' ' . $this->getEntityName() . $label;
+                    $pageSettings->pageTitle = $action . ' ' . $this->getEntityName() . $label;
                 }
             } elseif ($restModel instanceof Collection) {
-                $pageSettings->PageTitle = StringTools::pluralise($this->getEntityName(), 2);
+                $pageSettings->pageTitle = StringTools::pluralise($this->getEntityName(), 2);
             }
         }
     }

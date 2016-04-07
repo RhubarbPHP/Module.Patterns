@@ -18,6 +18,7 @@
 
 namespace Rhubarb\Patterns\Mvp\BoilerPlates\Login;
 
+use Rhubarb\Crown\DependencyInjection\Container;
 use Rhubarb\Crown\Exceptions\ForceResponseException;
 use Rhubarb\Crown\LoginProviders\Exceptions\LoginDisabledException;
 use Rhubarb\Crown\LoginProviders\Exceptions\LoginFailedException;
@@ -37,10 +38,6 @@ abstract class LoginPresenter extends Form
     public function __construct($loginProviderClassName = null, $usernameColumnName = "Username")
     {
         parent::__construct();
-
-        if ($loginProviderClassName == null) {
-            $loginProviderClassName = LoginProvider::getDefaultLoginProviderClassName();
-        }
 
         $this->loginProviderClassName = $loginProviderClassName;
         $this->usernameColumnName = $usernameColumnName;
@@ -75,8 +72,11 @@ abstract class LoginPresenter extends Form
      */
     private function getLoginProvider()
     {
-        $provider = $this->loginProviderClassName;
+        if (!$this->loginProviderClassName) {
+            return Container::instance(LoginProvider::class);
+        }
 
+        $provider = $this->loginProviderClassName;
         return new $provider();
     }
 

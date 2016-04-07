@@ -4,7 +4,7 @@ namespace Rhubarb\Patterns\Tests\Mvp\Crud;
 
 use Rhubarb\Crown\Request\WebRequest;
 use Rhubarb\Crown\String\StringTools;
-use Rhubarb\Crown\Tests\RhubarbTestCase;
+use Rhubarb\Crown\Tests\Fixtures\TestCases\RhubarbTestCase;
 use Rhubarb\Leaf\Tests\Fixtures\Presenters\Cruds\CrudsAddPresenter;
 use Rhubarb\Leaf\Tests\Fixtures\Presenters\Cruds\CrudsCollectionPresenter;
 use Rhubarb\Leaf\Tests\Fixtures\Presenters\Cruds\CrudsDetailsPresenter;
@@ -12,9 +12,9 @@ use Rhubarb\Leaf\Tests\Fixtures\Presenters\Cruds\CrudsItemPresenter;
 use Rhubarb\Leaf\Tests\Fixtures\Presenters\Cruds2\Cruds2EditPresenter;
 use Rhubarb\Leaf\Tests\Fixtures\Presenters\Cruds2\Cruds2ItemPresenter;
 use Rhubarb\Patterns\Mvp\Crud\CrudUrlHandler;
-use Rhubarb\Stem\Tests\Fixtures\Company;
-use Rhubarb\Stem\Tests\Fixtures\Example;
-use Rhubarb\Stem\Tests\Fixtures\User;
+use Rhubarb\Stem\Tests\unit\Fixtures\Company;
+use Rhubarb\Stem\Tests\unit\Fixtures\Example;
+use Rhubarb\Stem\Tests\unit\Fixtures\User;
 
 class CrudUrlHandlerTest extends RhubarbTestCase
 {
@@ -33,9 +33,9 @@ class CrudUrlHandlerTest extends RhubarbTestCase
         $crud->SetUrl("/users/");
 
         $request = new WebRequest();
-        $request->UrlPath = "/users/details/";
-        $request->Server("HTTP_ACCEPT", "text/html");
-        $request->Server("REQUEST_METHOD", "get");
+        $request->urlPath = "/users/details/";
+        $request->server("HTTP_ACCEPT", "text/html");
+        $request->server("REQUEST_METHOD", "get");
 
         $response = $crud->GenerateResponse($request);
         $this->assertInstanceOf(CrudsDetailsPresenter::class, $response->GetGenerator());
@@ -48,14 +48,14 @@ class CrudUrlHandlerTest extends RhubarbTestCase
         $crud->SetUrl("/users/");
 
         $request = new WebRequest();
-        $request->UrlPath = "/users/add/";
-        $request->Server("HTTP_ACCEPT", "text/html");
-        $request->Server("REQUEST_METHOD", "get");
+        $request->urlPath = "/users/add/";
+        $request->server("HTTP_ACCEPT", "text/html");
+        $request->server("REQUEST_METHOD", "get");
 
         $response = $crud->GenerateResponse($request);
 
         $this->assertInstanceOf(CrudsAddPresenter::class, $response->GetGenerator());
-        $this->assertTrue($response->GetGenerator()->GetRestModel()->IsNewRecord());
+        $this->assertTrue($response->GetGenerator()->getRestModel()->IsNewRecord());
     }
 
     public function testNewModelHasRelationshipFieldsPopulated()
@@ -86,9 +86,9 @@ class CrudUrlHandlerTest extends RhubarbTestCase
         $companyHandler->SetUrl("/companies/");
 
         $request = new WebRequest();
-        $request->Server("HTTP_ACCEPT", "text/html");
-        $request->Server("REQUEST_METHOD", "get");
-        $request->UrlPath = "/companies/" . $company->CompanyID . "/users/add/";
+        $request->server("HTTP_ACCEPT", "text/html");
+        $request->server("REQUEST_METHOD", "get");
+        $request->urlPath = "/companies/" . $company->CompanyID . "/users/add/";
 
         // Make sure the request is parsed.
         $companyHandler->GenerateResponse($request);
@@ -104,7 +104,7 @@ class CrudUrlHandlerTest extends RhubarbTestCase
         // actually get new model relationship population working by actually using the relationship details in the
         // schema instead of assuming unique identifiers.
 
-        $request->UrlPath = "/companies/" . $company->CompanyID . "/users/" . $model->UniqueIdentifier . "/contacts/add/";
+        $request->urlPath = "/companies/" . $company->CompanyID . "/users/" . $model->UniqueIdentifier . "/contacts/add/";
 
         // Make sure the request is parsed.
         $companyHandler->GenerateResponse($request);
@@ -126,9 +126,9 @@ class CrudUrlHandlerTest extends RhubarbTestCase
         $crud->SetUrl("/users/");
 
         $request = new WebRequest();
-        $request->UrlPath = "/users/add/";
-        $request->Server("HTTP_ACCEPT", "text/html");
-        $request->Server("REQUEST_METHOD", "get");
+        $request->urlPath = "/users/add/";
+        $request->server("HTTP_ACCEPT", "text/html");
+        $request->server("REQUEST_METHOD", "get");
 
         $response = $crud->GenerateResponse($request);
 
@@ -150,9 +150,9 @@ class CrudUrlHandlerTest extends RhubarbTestCase
         $user->Save();
 
         $request = new WebRequest();
-        $request->UrlPath = "/users/" . $user->UniqueIdentifier . "/edit/";
-        $request->Server("HTTP_ACCEPT", "text/html");
-        $request->Server("REQUEST_METHOD", "get");
+        $request->urlPath = "/users/" . $user->UniqueIdentifier . "/edit/";
+        $request->server("HTTP_ACCEPT", "text/html");
+        $request->server("REQUEST_METHOD", "get");
 
         $response = $crud->GenerateResponse($request);
 
@@ -161,9 +161,9 @@ class CrudUrlHandlerTest extends RhubarbTestCase
         $this->assertEquals("Goat", $response->GetContent());
 
         $request = new WebRequest();
-        $request->UrlPath = "/users/" . $user->UniqueIdentifier . "/";
-        $request->Server("HTTP_ACCEPT", "text/html");
-        $request->Server("REQUEST_METHOD", "get");
+        $request->urlPath = "/users/" . $user->UniqueIdentifier . "/";
+        $request->server("HTTP_ACCEPT", "text/html");
+        $request->server("REQUEST_METHOD", "get");
 
         $response = $crud->GenerateResponse($request);
 
