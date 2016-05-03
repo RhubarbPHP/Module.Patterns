@@ -103,7 +103,7 @@ class MyEditableView extends View
     public static $textbox;
     public static $column;
 
-    public function CreatePresenters()
+    protected function createSubLeaves()
     {
         self::$table = new TableWithEditableCellsPresenter(Example::Find());
         self::$textbox = new TextBox("Forename");
@@ -113,7 +113,7 @@ class MyEditableView extends View
                 self::$column = new EditablePresenterColumn(self::$textbox)
             ];
 
-        $this->AddPresenters(
+        $this->registerSubLeaf(
             self::$table,
             self::$textbox
         );

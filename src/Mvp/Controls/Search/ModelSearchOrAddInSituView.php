@@ -30,11 +30,11 @@ class ModelSearchOrAddInSituView extends SearchControlView
         $this->addPresenter = $addPresenter;
     }
 
-    public function createPresenters()
+    protected function createSubLeaves()
     {
         parent::createPresenters();
 
-        $this->addPresenters($this->addPresenter);
+        $this->registerSubLeaf($this->addPresenter);
     }
 
     public function printViewContent()

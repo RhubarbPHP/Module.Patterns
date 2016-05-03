@@ -21,19 +21,19 @@ namespace Rhubarb\Patterns\Mvp\BoilerPlates\Login;
 use Rhubarb\Leaf\Presenters\Controls\Buttons\Button;
 use Rhubarb\Leaf\Presenters\Controls\Text\Password\Password;
 use Rhubarb\Leaf\Presenters\Controls\Text\TextBox\TextBox;
-use Rhubarb\Leaf\Views\HtmlView;
+use Rhubarb\Leaf\Views\View;
 
-class LoginView extends HtmlView
+class LoginView extends View
 {
     public $failed = false;
 
     public $usernameColumnName = "";
 
-    public function createPresenters()
+    protected function createSubLeaves()
     {
         parent::createPresenters();
 
-        $this->addPresenters(
+        $this->registerSubLeaf(
             new TextBox($this->usernameColumnName),
             new Password("Password"),
             new Button("Login", "Login", function () {

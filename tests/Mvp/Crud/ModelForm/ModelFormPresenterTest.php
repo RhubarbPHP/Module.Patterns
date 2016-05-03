@@ -12,7 +12,7 @@ use Rhubarb\Stem\Tests\unit\Fixtures\User;
 class ModelFormPresenterTest extends RhubarbTestCase
 {
     /**
-     * @var ModelFormPresenter
+     * @var ModelBoundLeaf
      */
     private $presenter;
 
@@ -87,7 +87,7 @@ class ModelFormPresenterTest extends RhubarbTestCase
     }
 }
 
-class TestModelPresenter extends ModelFormPresenter
+class TestModelPresenter extends ModelBoundLeaf
 {
     protected function CreateDefaultValidator()
     {
