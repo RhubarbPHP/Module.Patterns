@@ -25,7 +25,7 @@ class TableWithRowStatusColumnPresenter extends Table
 {
     protected function inflateColumns()
     {
-        $columns = parent::inflateColumns($this->Columns);
+        $columns = parent::inflateColumns($this->columns);
 
         $statusColumn = new Template("<div class=\"rpc-status\"></div>", "");
 

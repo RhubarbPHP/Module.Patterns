@@ -17,7 +17,7 @@ class TableWithEditableCellsPresenterTest extends RhubarbTestCase
     public function testEditablePresenterColumnCreatedWhenGivenAPresenter()
     {
         $table = new MyEditableTable(Example::Find());
-        $table->Columns =
+        $table->columns =
             [
                 new TextBox("Forename")
             ];
@@ -34,7 +34,7 @@ class TableWithEditableCellsPresenterTest extends RhubarbTestCase
         $example->Save();
 
         $table = new MyEditableTable(Example::Find());
-        $table->Columns =
+        $table->columns =
             [
                 new Template("Empty Column")
             ];
@@ -85,7 +85,7 @@ class MyEditableTable extends TableWithEditableCellsPresenter
 
     public function PublicInflateColumns()
     {
-        return $this->InflateColumns($this->Columns);
+        return $this->InflateColumns($this->columns);
     }
 }
 
@@ -108,7 +108,7 @@ class MyEditableView extends View
         self::$table = new TableWithEditableCellsPresenter(Example::Find());
         self::$textbox = new TextBox("Forename");
 
-        self::$table->Columns =
+        self::$table->columns =
             [
                 self::$column = new EditableLeafColumn(self::$textbox)
             ];

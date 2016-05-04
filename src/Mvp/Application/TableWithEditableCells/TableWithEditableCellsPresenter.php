@@ -73,7 +73,7 @@ class TableWithEditableCellsPresenter extends Table
     private function compileSpawnableSettings()
     {
         $spawnSettings = [];
-        $columns = $this->inflateColumns($this->Columns);
+        $columns = $this->inflateColumns($this->columns);
 
         $i = -1;
 
