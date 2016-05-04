@@ -64,11 +64,11 @@ class LoginView extends View
 
             <div class="c-form__group">
                 <label class="c-form__label"><?= $this->usernameColumnName; ?></label>
-                <?= $this->presenters[$this->usernameColumnName]; ?>
+                <?= $this->leaves[$this->usernameColumnName]; ?>
             </div>
             <div class="c-form__group">
                 <label class="c-form__label">Password</label>
-                <?= $this->presenters["Password"]; ?>
+                <?= $this->leaves["Password"]; ?>
             </div>
 
             <?php
@@ -76,7 +76,7 @@ class LoginView extends View
             ?>
 
             <div class="c-form__actions">
-                <?= $this->presenters["Login"]; ?>
+                <?= $this->leaves["Login"]; ?>
             </div>
 
             <?php
