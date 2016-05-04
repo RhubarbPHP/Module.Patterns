@@ -18,13 +18,13 @@
 
 namespace Rhubarb\Patterns\Mvp\Controls\Search;
 
-use Rhubarb\Leaf\Presenters\Presenter;
+use Rhubarb\Leaf\Presenters\Leaf;
 
 class ModelSearchOrAddPresenter extends ModelSearchControl
 {
     protected $addPresenter;
 
-    public function __construct($name, $modelClassName, Presenter $addPresenter = null)
+    public function __construct($name, $modelClassName, Leaf $addPresenter = null)
     {
         parent::__construct($name, $modelClassName);
 

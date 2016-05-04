@@ -18,7 +18,7 @@
 
 namespace Rhubarb\Patterns\Mvp\Application\TableWithClickToNavigateRows;
 
-use Rhubarb\Leaf\Presenters\Application\Table\TableView;
+use Rhubarb\Leaf\Table\Leaves\TableView;
 use Rhubarb\Leaf\Views\WithViewBridgeTrait;
 
 class TableWithClickToNavigateRowsView extends TableView

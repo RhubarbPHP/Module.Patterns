@@ -18,7 +18,7 @@
 
 namespace Rhubarb\Patterns\Mvp\Application\TableWithRowStatusColumn;
 
-use Rhubarb\Leaf\Presenters\Application\Table\TableView;
+use Rhubarb\Leaf\Table\Leaves\TableView;
 
 class TableWithRowStatusColumnView extends TableView
 {

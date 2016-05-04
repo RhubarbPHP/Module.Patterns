@@ -18,8 +18,8 @@
 
 namespace Rhubarb\Patterns\Mvp\Application\TableWithEditableRows;
 
-use Rhubarb\Leaf\Presenters\Application\Table\Columns\ISortableColumn;
-use Rhubarb\Leaf\Presenters\Application\Table\Table;
+use Rhubarb\Leaf\Table\Leaves\Columns\ISortableColumn;
+use Rhubarb\Leaf\Table\Leaves\Table;
 use Rhubarb\Stem\Models\Model;
 
 abstract class TableWithEditableRowsPresenter extends Table

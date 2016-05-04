@@ -18,7 +18,7 @@
 
 namespace Rhubarb\Patterns\Mvp\Application\TableWithEditableCells;
 
-use Rhubarb\Leaf\Presenters\Application\Table\Columns\TableColumn;
+use Rhubarb\Leaf\Table\Leaves\Columns\TableColumn;
 use Rhubarb\Stem\Models\Model;
 
 class RowControlsColumn extends TableColumn

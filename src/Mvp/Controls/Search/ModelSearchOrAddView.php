@@ -19,13 +19,13 @@
 namespace Rhubarb\Patterns\Mvp\Controls\Search;
 
 use Rhubarb\Leaf\Presenters\Controls\Selection\SearchControl\SearchControlView;
-use Rhubarb\Leaf\Presenters\Presenter;
+use Rhubarb\Leaf\Presenters\Leaf;
 
 class ModelSearchOrAddView extends SearchControlView
 {
     private $addPresenter;
 
-    public function __construct(Presenter $addPresenter = null)
+    public function __construct(Leaf $addPresenter = null)
     {
         $this->addPresenter = $addPresenter;
     }

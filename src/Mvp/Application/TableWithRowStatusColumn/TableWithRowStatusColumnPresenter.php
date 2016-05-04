@@ -18,8 +18,8 @@
 
 namespace Rhubarb\Patterns\Mvp\Application\TableWithRowStatusColumn;
 
-use Rhubarb\Leaf\Presenters\Application\Table\Columns\Template;
-use Rhubarb\Leaf\Presenters\Application\Table\Table;
+use Rhubarb\Leaf\Table\Leaves\Columns\Template;
+use Rhubarb\Leaf\Table\Leaves\Table;
 
 class TableWithRowStatusColumnPresenter extends Table
 {

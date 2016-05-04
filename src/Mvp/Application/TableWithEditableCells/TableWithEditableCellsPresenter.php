@@ -18,8 +18,8 @@
 
 namespace Rhubarb\Patterns\Mvp\Application\TableWithEditableCells;
 
-use Rhubarb\Leaf\Presenters\Application\Table\Columns;
-use Rhubarb\Leaf\Presenters\Application\Table\Table;
+use Rhubarb\Leaf\Table\Leaves\Columns;
+use Rhubarb\Leaf\Table\Leaves\Table;
 use Rhubarb\Leaf\Presenters\SpawnableByViewBridgePresenter;
 
 class TableWithEditableCellsPresenter extends Table
@@ -50,7 +50,7 @@ class TableWithEditableCellsPresenter extends Table
     protected function createColumnFromObject($object, $label)
     {
         if ($object instanceof SpawnableByViewBridgePresenter) {
-            return new EditablePresenterColumn($object, $label);
+            return new EditableLeafColumn($object, $label);
         }
 
         return parent::createColumnFromObject($object, $label);
@@ -62,8 +62,8 @@ class TableWithEditableCellsPresenter extends Table
         $columns[] = new RowControlsColumn();
 
         foreach ($columns as $column) {
-            if ($column instanceof EditablePresenterColumn) {
-                $column->setShadowColumn($this->createColumnFromString($column->getPresenter()->getName(), ""));
+            if ($column instanceof EditableLeafColumn) {
+                $column->setShadowColumn($this->createColumnFromString($column->getLeaf()->getName(), ""));
             }
         }
 
@@ -80,8 +80,8 @@ class TableWithEditableCellsPresenter extends Table
         foreach ($columns as $column) {
             $i++;
 
-            if ($column instanceof EditablePresenterColumn) {
-                $spawnSettings[$i] = $column->getPresenter()->getSpawnStructure();
+            if ($column instanceof EditableLeafColumn) {
+                $spawnSettings[$i] = $column->getLeaf()->getSpawnStructure();
             }
         }
 

@@ -18,7 +18,7 @@
 
 namespace Rhubarb\Patterns\Mvp\Application\TableWithEditableRows;
 
-use Rhubarb\Leaf\Presenters\Application\Table\TableView;
+use Rhubarb\Leaf\Table\Leaves\TableView;
 
 class TableWithEditableRowsView extends TableView
 {

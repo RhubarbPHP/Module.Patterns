@@ -18,18 +18,18 @@
 
 namespace Rhubarb\Patterns\Mvp\Application\TableWithEditableCells;
 
-use Rhubarb\Leaf\Presenters\Application\Table\Columns\PresenterColumn;
-use Rhubarb\Leaf\Presenters\Application\Table\Columns\TableColumn;
-use Rhubarb\Leaf\Presenters\Presenter;
+use Rhubarb\Leaf\Table\Leaves\Columns\LeafColumn;
+use Rhubarb\Leaf\Table\Leaves\Columns\TableColumn;
+use Rhubarb\Leaf\Presenters\Leaf;
 use Rhubarb\Stem\Models\Model;
 
-class EditablePresenterColumn extends PresenterColumn
+class EditableLeafColumn extends LeafColumn
 {
     private $shadowColumn = false;
 
-    public function __construct(Presenter $presenter, $label = "")
+    public function __construct(Leaf $leaf, $label = "")
     {
-        parent::__construct($presenter, $label);
+        parent::__construct($leaf, $label);
     }
 
     public function GetSortableColumnName()
@@ -56,7 +56,7 @@ class EditablePresenterColumn extends PresenterColumn
     public function getCustomCellAttributes(Model $row)
     {
         $attributes = parent::getCustomCellAttributes($row);
-        $attributes["data-value"] = json_encode($this->presenter->FetchBoundData());
+        $attributes["data-value"] = json_encode($this->leaf->FetchBoundData());
 
         return $attributes;
     }

@@ -18,7 +18,7 @@
 
 namespace Rhubarb\Patterns\Mvp\Application\TableWithClickToNavigateRows;
 
-use Rhubarb\Leaf\Presenters\Application\Table\Table;
+use Rhubarb\Leaf\Table\Leaves\Table;
 
 class TableWithClickToNavigateRowsPresenter extends Table
 {
