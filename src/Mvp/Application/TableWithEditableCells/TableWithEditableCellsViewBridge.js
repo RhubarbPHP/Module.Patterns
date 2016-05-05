@@ -95,7 +95,7 @@ bridge.prototype.attachEvents = function () {
 
         $("*", tr).each(function () {
             if (this.viewBridge) {
-                rowData[this.viewBridge.presenterName] = this.viewBridge.getValue();
+                rowData[this.viewBridge.leafName] = this.viewBridge.getValue();
             }
         });
 
@@ -138,7 +138,7 @@ bridge.prototype.attachEvents = function () {
 bridge.prototype.onSubPresenterValueChanged = function (viewBridge, value) {
     $(viewBridge.viewNode).parents('tr:first').addClass('updating');
 
-    this.raiseServerEvent('SubPresenterValueChanged', viewBridge.presenterPath, value, function () {
+    this.raiseServerEvent('SubPresenterValueChanged', viewBridge.leafPath, value, function () {
         $(viewBridge.viewNode).parents('tr:first').removeClass('updating').addClass('updated');
     });
 };
