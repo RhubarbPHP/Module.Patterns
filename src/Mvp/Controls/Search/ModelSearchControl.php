@@ -18,7 +18,7 @@
 
 namespace Rhubarb\Patterns\Mvp\Controls\Search;
 
-use Rhubarb\Leaf\Presenters\Controls\Selection\SearchControl\SearchControl;
+use Rhubarb\Leaf\Controls\Common\SelectionControls\SearchControl\SearchControl;
 use Rhubarb\Stem\Collections\Collection;
 use Rhubarb\Stem\Filters\Contains;
 use Rhubarb\Stem\Models\Model;
@@ -30,9 +30,9 @@ class ModelSearchControl extends SearchControl
 
     public function __construct($name = "", $modelClassName)
     {
-        parent::__construct($name);
-
         $this->modelClassName = $modelClassName;
+        
+        parent::__construct($name);
     }
 
     protected function getResultColumns()
@@ -68,14 +68,14 @@ class ModelSearchControl extends SearchControl
 
     protected function getCurrentlyAvailableSelectionItems()
     {
-        if ($this->Phrase == "") {
+        if ($this->model->searchPhrase == "") {
             return [];
         }
 
         $class = $this->modelClassName;
 
         $list = new Collection($class);
-        $filter = $this->getCollectionFilter($this->Phrase);
+        $filter = $this->getCollectionFilter($this->model->searchPhrase);
 
         $list->filter($filter);
 
@@ -97,8 +97,8 @@ class ModelSearchControl extends SearchControl
         return $filter;
     }
 
-    protected function createView()
+    protected function getViewClass()
     {
-        return new ModelSearchView();
+        return ModelSearchControlView::class;
     }
 }

@@ -18,11 +18,16 @@
 
 namespace Rhubarb\Patterns\Mvp\Controls\Search;
 
-use Rhubarb\Leaf\Presenters\Leaf;
+use Rhubarb\Leaf\Leaves\Leaf;
 
-class ModelSearchOrAddPresenter extends ModelSearchControl
+class ModelSearchOrAddControl extends ModelSearchControl
 {
     protected $addPresenter;
+
+    /**
+     * @var ModelSearchOrAddControlModel
+     */
+    protected $model;
 
     public function __construct($name, $modelClassName, Leaf $addPresenter = null)
     {
@@ -32,9 +37,9 @@ class ModelSearchOrAddPresenter extends ModelSearchControl
         if ($addPresenter != null) {
             $addPresenter->setName("Add");
             $this->addPresenter = $addPresenter;
-            $this->HasAddPresenter = true;
+            $this->model->hasAddPresenter = true;
         } else {
-            $this->HasAddPresenter = false;
+            $this->model->hasAddPresenter = false;
         }
     }
 
@@ -47,6 +52,6 @@ class ModelSearchOrAddPresenter extends ModelSearchControl
 
     protected function createView()
     {
-        return new ModelSearchOrAddView($this->addPresenter);
+        return new ModelSearchOrAddControlView($this->addPresenter);
     }
 }

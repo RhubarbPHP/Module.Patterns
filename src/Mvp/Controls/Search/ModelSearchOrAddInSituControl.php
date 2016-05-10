@@ -2,7 +2,7 @@
 
 namespace Rhubarb\Patterns\Mvp\Controls\Search;
 
-class ModelSearchOrAddInSituPresenter extends ModelSearchOrAddPresenter
+class ModelSearchOrAddInSituControl extends ModelSearchOrAddControl
 {
     protected function createView()
     {

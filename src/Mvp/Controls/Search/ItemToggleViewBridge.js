@@ -1,4 +1,4 @@
-var bridge = function (presenterPath) {
+var bridge = function (leafPath) {
     window.rhubarb.viewBridgeClasses.SelectionControlViewBridge.apply(this, arguments);
 
     if (this.model.SelectedItems.length === 0) {

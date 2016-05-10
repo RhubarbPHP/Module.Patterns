@@ -1,4 +1,4 @@
-var bridge = function (presenterPath) {
+var bridge = function (leafPath) {
     window.rhubarb.viewBridgeClasses.TableViewBridge.apply(this, arguments);
 };
 
@@ -135,7 +135,7 @@ bridge.prototype.attachEvents = function () {
     });
 };
 
-bridge.prototype.onSubPresenterValueChanged = function (viewBridge, value) {
+bridge.prototype.onSubLeafValueChanged = function (viewBridge, value) {
     $(viewBridge.viewNode).parents('tr:first').addClass('updating');
 
     this.raiseServerEvent('SubPresenterValueChanged', viewBridge.leafPath, value, function () {

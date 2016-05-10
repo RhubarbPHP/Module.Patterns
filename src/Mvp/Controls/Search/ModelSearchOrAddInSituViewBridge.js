@@ -1,4 +1,4 @@
-var bridge = function (presenterPath) {
+var bridge = function (leafPath) {
     window.rhubarb.viewBridgeClasses.SearchControl.apply(this, arguments);
 
     this.searchInterface = $(this.viewNode.children[0]);

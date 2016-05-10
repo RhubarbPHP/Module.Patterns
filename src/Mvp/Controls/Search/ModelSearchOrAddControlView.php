@@ -18,10 +18,11 @@
 
 namespace Rhubarb\Patterns\Mvp\Controls\Search;
 
-use Rhubarb\Leaf\Presenters\Controls\Selection\SearchControl\SearchControlView;
-use Rhubarb\Leaf\Presenters\Leaf;
+use Rhubarb\Leaf\Controls\Common\SelectionControls\SearchControl\SearchControlView;
+use Rhubarb\Leaf\Leaves\Leaf;
+use Rhubarb\Leaf\Leaves\LeafDeploymentPackage;
 
-class ModelSearchOrAddView extends SearchControlView
+class ModelSearchOrAddControlView extends SearchControlView
 {
     private $addPresenter;
 
@@ -32,7 +33,7 @@ class ModelSearchOrAddView extends SearchControlView
 
     protected function createSubLeaves()
     {
-        parent::createPresenters();
+        parent::createSubLeaves();
 
         $this->registerSubLeaf($this->addPresenter);
     }
@@ -46,15 +47,15 @@ class ModelSearchOrAddView extends SearchControlView
         }
     }
 
-    protected function getClientSideViewBridgeName()
+    protected function getViewBridgeName()
     {
-        return "ModelSearchOrAddViewBridge";
+        return "ModelSearchOrAddControlViewBridge";
     }
 
     public function getDeploymentPackage()
     {
         $package = parent::getDeploymentPackage();
-        $package->resourcesToDeploy[] = __DIR__ . "/ModelSearchOrAddViewBridge.js";
+        $package->resourcesToDeploy[] = __DIR__ . "/ModelSearchOrAddControlViewBridge.js";
 
         return $package;
     }

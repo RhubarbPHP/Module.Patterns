@@ -18,8 +18,8 @@
 
 namespace Rhubarb\Patterns\Mvp\Controls\Search;
 
-use Rhubarb\Leaf\Presenters\Controls\Selection\SearchControl\SearchControlView;
+use Rhubarb\Leaf\Controls\Common\SelectionControls\SearchControl\SearchControlView;
 
-class ModelSearchView extends SearchControlView
+class ModelSearchControlView extends SearchControlView
 {
 }

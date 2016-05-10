@@ -1,4 +1,4 @@
-var repeatingDropDown = function (presenterPath) {
+var repeatingDropDown = function (leafPath) {
     window.rhubarb.viewBridgeClasses.DropDownViewBridge.apply(this, arguments);
 
     this.element = this.element.find('select');

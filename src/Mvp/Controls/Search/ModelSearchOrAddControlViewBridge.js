@@ -1,4 +1,4 @@
-var bridge = function (presenterPath) {
+var bridge = function (leafPath) {
     window.rhubarb.viewBridgeClasses.SearchControl.apply(this, arguments);
 };
 
@@ -33,7 +33,7 @@ bridge.prototype.attachEvents = function () {
 bridge.prototype.updateUiState = function () {
     window.rhubarb.viewBridgeClasses.SearchControl.prototype.updateUiState.apply(this);
 
-    if (this.model.HasAddPresenter) {
+    if (this.model.hasAddPresenter) {
         this.addButton.hide();
 
         switch (this._state) {
@@ -53,4 +53,4 @@ bridge.prototype.updateUiState = function () {
     }
 };
 
-window.rhubarb.viewBridgeClasses.ModelSearchOrAddViewBridge = bridge;
+window.rhubarb.viewBridgeClasses.ModelSearchOrAddControlViewBridge = bridge;
