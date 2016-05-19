@@ -32,7 +32,7 @@ class TableWithEditableCellsView extends TableView
         return $package;
     }
 
-    protected function getClientSideViewBridgeName()
+    protected function getViewBridgeName()
     {
         return "TableWithEditableCellsViewBridge";
     }

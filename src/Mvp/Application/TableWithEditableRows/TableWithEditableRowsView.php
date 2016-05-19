@@ -22,7 +22,7 @@ use Rhubarb\Leaf\Table\Leaves\TableView;
 
 class TableWithEditableRowsView extends TableView
 {
-    protected function getClientSideViewBridgeName()
+    protected function getViewBridgeName()
     {
         return "TableWithEditableRowsViewBridge";
     }
