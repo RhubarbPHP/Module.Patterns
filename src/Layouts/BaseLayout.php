@@ -85,7 +85,7 @@ class BaseLayout extends Layout
         <?php $this->printTail(); ?>
         </body>
         </html>
-    <?php
+        <?php
 
     }
 }

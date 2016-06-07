@@ -28,7 +28,7 @@ class ModelFormPresenterTest extends RhubarbTestCase
         $this->presenter = new TestModelPresenter();
         $this->view = new MockModelPresenterView();
 
-        $this->presenter->AttachMockView($this->view);
+        $this->presenter->attachMockView($this->view);
     }
 
     public function testSaveButton()
@@ -41,16 +41,16 @@ class ModelFormPresenterTest extends RhubarbTestCase
         // and operates on the presenter model, not the rest model.
         $this->presenter->Username = "abc";
 
-        $this->presenter->SetRestModel($user);
+        $this->presenter->setRestModel($user);
 
         try {
-            $this->view->SimulateEvent("SavePressed");
+            $this->view->simulateEvent("SavePressed");
 
             $this->fail("SavePressed should have thrown a ForceResponseException to redirect us");
         } catch (ForceResponseException $ex) {
         }
 
-        $this->assertFalse($user->IsNewRecord());
+        $this->assertFalse($user->isNewRecord());
     }
 
     public function testCancelButton()
@@ -62,16 +62,16 @@ class ModelFormPresenterTest extends RhubarbTestCase
         // and operates on the presenter model, not the rest model.
         $this->presenter->Username = "abc";
 
-        $this->presenter->SetRestModel($user);
+        $this->presenter->setRestModel($user);
 
         try {
-            $this->view->SimulateEvent("CancelPressed");
+            $this->view->simulateEvent("CancelPressed");
 
             $this->fail("SavePressed should have thrown a ForceResponseException to redirect us");
         } catch (ForceResponseException $ex) {
         }
 
-        $this->assertTrue($user->IsNewRecord());
+        $this->assertTrue($user->isNewRecord());
     }
 
     public function testInvalidModelDoesntSave()
@@ -79,17 +79,17 @@ class ModelFormPresenterTest extends RhubarbTestCase
         $user = new User();
         $user->Username = "";
 
-        $this->presenter->SetRestModel($user);
+        $this->presenter->setRestModel($user);
 
-        $this->view->SimulateEvent("SavePressed");
+        $this->view->simulateEvent("SavePressed");
 
-        $this->assertTrue($user->IsNewRecord(), "This test should have failed validation so the user should not be saved.");
+        $this->assertTrue($user->isNewRecord(), "This test should have failed validation so the user should not be saved.");
     }
 }
 
 class TestModelPresenter extends ModelFormPresenter
 {
-    protected function CreateDefaultValidator()
+    protected function createDefaultValidator()
     {
         $validator = new Validator();
         $validator->validations[] = new HasValue("Username");

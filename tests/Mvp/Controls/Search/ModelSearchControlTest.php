@@ -16,23 +16,23 @@ class ModelSearchControlTest extends RhubarbTestCase
         $user = new User();
         $user->Forename = "Alice";
         $user->Surname = "Smith";
-        $user->Save();
+        $user->save();
 
         $user = new User();
         $user->Forename = "Bob";
         $user->Surname = "Diamond";
-        $user->Save();
+        $user->save();
     }
 
     public function testSearchHasItemsOnlyWhenHasPhrase()
     {
         $search = new UnitTestModelSearchControl();
-        $items = $search->PublicGetCurrentAvailableSelectionItems();
+        $items = $search->publicGetCurrentAvailableSelectionItems();
 
         $this->assertCount(0, $items);
 
         $search->Phrase = "Bob";
-        $items = $search->PublicGetCurrentAvailableSelectionItems();
+        $items = $search->publicGetCurrentAvailableSelectionItems();
 
         $this->assertCount(1, $items);
         $this->assertEquals("Bob Diamond", $items[0]->label);
@@ -42,9 +42,9 @@ class ModelSearchControlTest extends RhubarbTestCase
     {
         $view = new UnitTestView();
         $search = new UnitTestModelSearchControl();
-        $search->AttachMockView($view);
+        $search->attachMockView($view);
 
-        $items = $view->SimulateEvent("SearchPressed", "alice");
+        $items = $view->simulateEvent("SearchPressed", "alice");
         $this->assertCount(1, $items);
         $this->assertEquals("Alice Smith", $items[0]->label);
     }
@@ -57,14 +57,14 @@ class UnitTestModelSearchControl extends ModelSearchControl
         parent::__construct($name, User::class);
     }
 
-    public function PublicRaiseEvent()
+    public function publicRaiseEvent()
     {
         $args = func_get_args();
 
         return call_user_func_array([$this, "RaiseEvent"], $args);
     }
 
-    public function PublicGetCurrentAvailableSelectionItems()
+    public function publicGetCurrentAvailableSelectionItems()
     {
         return $this->getCurrentlyAvailableSelectionItems();
     }

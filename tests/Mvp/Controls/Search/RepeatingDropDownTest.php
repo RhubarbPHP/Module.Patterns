@@ -10,17 +10,17 @@ class RepeatingDropDownTest extends RhubarbTestCase
 {
     public function testEmptyValuesAreRemoved()
     {
-        $request = Context::CurrentRequest();
-        $request->Post("Test", [0, 1, 2, 3, 0]);
+        $request = Context::currentRequest();
+        $request->post("Test", [0, 1, 2, 3, 0]);
 
         $result = false;
 
         $dropDown = new RepeatingDropDown("Test");
-        $dropDown->AttachEventHandler("SetBoundData", function ($presenter, $data) use (&$result) {
+        $dropDown->attachEventHandler("SetBoundData", function ($presenter, $data) use (&$result) {
             $result = $data;
         });
 
-        $dropDown->GenerateResponse($request);
+        $dropDown->generateResponse($request);
 
         $this->assertEquals([1, 2, 3], $result);
     }

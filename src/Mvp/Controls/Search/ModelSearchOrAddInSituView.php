@@ -41,7 +41,7 @@ class ModelSearchOrAddInSituView extends SearchControlView
     {
         ?>
         <div>
-            <?php parent::printViewContent();?>
+            <?php parent::printViewContent(); ?>
         </div>
         <div style="display:none">
             <?php

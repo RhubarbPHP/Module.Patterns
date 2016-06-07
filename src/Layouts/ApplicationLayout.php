@@ -46,7 +46,7 @@ class ApplicationLayout extends BaseLayout
 
         <div id="content">
         <div class="shell">
-    <?php
+        <?php
     }
 
     protected function printSystemTitle()
@@ -70,6 +70,6 @@ class ApplicationLayout extends BaseLayout
         </div>
         </div>
         </div>
-    <?php
+        <?php
     }
 }
