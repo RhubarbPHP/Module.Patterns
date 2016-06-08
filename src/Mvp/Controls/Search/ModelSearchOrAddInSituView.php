@@ -32,7 +32,7 @@ class ModelSearchOrAddInSituView extends SearchControlView
 
     protected function createSubLeaves()
     {
-        parent::createPresenters();
+        parent::createSubLeaves();
 
         $this->registerSubLeaf($this->addPresenter);
     }
@@ -53,7 +53,7 @@ class ModelSearchOrAddInSituView extends SearchControlView
         <?php
     }
 
-    protected function getClientSideViewBridgeName()
+    protected function getViewBridgeName()
     {
         return "ModelSearchOrAddInSituViewBridge";
     }

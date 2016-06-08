@@ -31,7 +31,7 @@ class LoginView extends View
 
     protected function createSubLeaves()
     {
-        parent::createPresenters();
+        parent::createSubLeaves();
 
         $this->registerSubLeaf(
             new TextBox($this->usernameColumnName),

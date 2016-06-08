@@ -37,7 +37,7 @@ class RepeatingDropDownView extends DropDownView
         return $package;
     }
 
-    protected function getClientSideViewBridgeName()
+    protected function getViewBridgeName()
     {
         return "RepeatingDropDown";
     }

@@ -56,7 +56,7 @@ class ItemToggleView extends SelectionControlView
         </span><?php
     }
 
-    protected function getClientSideViewBridgeName()
+    protected function getViewBridgeName()
     {
         return "ItemToggleViewBridge";
     }
@@ -64,7 +64,7 @@ class ItemToggleView extends SelectionControlView
     public function getDeploymentPackage()
     {
         $package = parent::getDeploymentPackage();
-        $package->resourcesToDeploy[] = __DIR__ . "/" . $this->getClientSideViewBridgeName() . ".js";
+        $package->resourcesToDeploy[] = __DIR__ . "/" . $this->getViewBridgeName() . ".js";
 
         return $package;
     }
