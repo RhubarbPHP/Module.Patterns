@@ -20,6 +20,7 @@ namespace Rhubarb\Patterns\Mvp\Controls\Search;
 
 use Rhubarb\Leaf\Controls\Common\SelectionControls\SearchControl\SearchControl;
 use Rhubarb\Stem\Collections\Collection;
+use Rhubarb\Stem\Collections\RepositoryCollection;
 use Rhubarb\Stem\Filters\Contains;
 use Rhubarb\Stem\Models\Model;
 use Rhubarb\Stem\Schema\SolutionSchema;
@@ -74,7 +75,7 @@ class ModelSearchControl extends SearchControl
 
         $class = $this->modelClassName;
 
-        $list = new Collection($class);
+        $list = new RepositoryCollection($class);
         $filter = $this->getCollectionFilter($this->model->searchPhrase);
 
         $list->filter($filter);
