@@ -27,8 +27,8 @@ class BaseLayout extends Layout
 {
     protected function getTitle()
     {
-        $pageSettings = new HtmlPageSettings();
-        return $pageSettings->PageTitle;
+        $pageSettings = HtmlPageSettings::singleton();
+        return $pageSettings->pageTitle;
     }
 
     protected function printHead()
