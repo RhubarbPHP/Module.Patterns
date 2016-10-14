@@ -16,11 +16,11 @@ class RepeatingDropDownTest extends RhubarbTestCase
         $result = false;
 
         $dropDown = new RepeatingDropDown("Test");
-        $dropDown->AttachEventHandler("SetBoundData", function ($presenter, $data) use (&$result) {
+        $dropDown->attachEventHandler("SetBoundData", function ($presenter, $data) use (&$result) {
             $result = $data;
         });
 
-        $dropDown->GenerateResponse($request);
+        $dropDown->generateResponse($request);
 
         $this->assertEquals([1, 2, 3], $result);
     }

@@ -18,16 +18,16 @@ class LoginPresenterTest extends RhubarbTestCase
         $user->Username = "acuthbert";
         $user->Password = '$6$rounds=10000$saltyfish$xsdN77OODY/XmxLdlkFW9CNxuE4H6NjEGG7K7tGJbzHUyDrVDHROL/FqG.ANet3dcd6WqGOOvaDjLv/WeAtcK0';
         $user->Active = 1;
-        $user->Save();
+        $user->save();
 
         $user = new User();
         $user->Username = "joesmith";
         $user->Password = '$6$rounds=10000$saltyfish$xsdN77OODY/XmxLdlkFW9CNxuE4H6NjEGG7K7tGJbzHUyDrVDHROL/FqG.ANet3dcd6WqGOOvaDjLv/WeAtcK0';
         $user->Active = 0;
-        $user->Save();
+        $user->save();
 
         $testLoginProvider = new TestLoginProvider();
-        $testLoginProvider->LogOut();
+        $testLoginProvider->logOut();
     }
 
     private $presenter;
@@ -40,8 +40,8 @@ class LoginPresenterTest extends RhubarbTestCase
         $this->presenter = new LoginPresenterUnitTest();
         $this->view = new UnitTestView();
 
-        $this->presenter->AttachMockView($this->view);
-        $this->presenter->Initialise();
+        $this->presenter->attachMockView($this->view);
+        $this->presenter->initialise();
     }
 
 
@@ -50,9 +50,9 @@ class LoginPresenterTest extends RhubarbTestCase
         $this->presenter->Username = "billy";
         $this->presenter->Password = "bob";
 
-        $this->view->SimulateEvent("AttemptLogin");
+        $this->view->simulateEvent("AttemptLogin");
 
-        $this->presenter->GenerateResponse();
+        $this->presenter->generateResponse();
 
         $this->assertTrue($this->view->failed);
     }
@@ -62,8 +62,8 @@ class LoginPresenterTest extends RhubarbTestCase
         $this->presenter->Username = "joesmith";
         $this->presenter->Password = "abc123";
 
-        $this->view->SimulateEvent("AttemptLogin");
-        $this->presenter->GenerateResponse();
+        $this->view->simulateEvent("AttemptLogin");
+        $this->presenter->generateResponse();
 
         $this->assertTrue($this->view->failed);
         $this->assertTrue($this->view->disabled);
@@ -73,13 +73,13 @@ class LoginPresenterTest extends RhubarbTestCase
     {
         $this->presenter->Username = "acuthbert";
         $this->presenter->Password = "abc123";
-        $this->view->SimulateEvent("AttemptLogin");
-        $this->presenter->GenerateResponse();
+        $this->view->simulateEvent("AttemptLogin");
+        $this->presenter->generateResponse();
 
         $this->assertTrue($this->presenter->loggedIn);
 
         $testLoginProvider = new TestLoginProvider();
-        $this->assertTrue($testLoginProvider->IsLoggedIn());
+        $this->assertTrue($testLoginProvider->isLoggedIn());
     }
 }
 

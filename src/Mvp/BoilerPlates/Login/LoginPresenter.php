@@ -111,7 +111,7 @@ abstract class LoginPresenter extends Form
             $login->logOut();
         }
 
-        if ( $login->isLoggedIn() ){
+        if ($login->isLoggedIn()) {
             $this->onSuccess();
         }
     }

@@ -32,7 +32,7 @@ class EditablePresenterColumn extends PresenterColumn
         parent::__construct($presenter, $label);
     }
 
-    public function GetSortableColumnName()
+    public function getSortableColumnName()
     {
         return $this->shadowColumn->getSortableColumnName();
     }
@@ -56,7 +56,7 @@ class EditablePresenterColumn extends PresenterColumn
     public function getCustomCellAttributes(Model $row)
     {
         $attributes = parent::getCustomCellAttributes($row);
-        $attributes["data-value"] = json_encode($this->presenter->FetchBoundData());
+        $attributes["data-value"] = json_encode($this->presenter->fetchBoundData());
 
         return $attributes;
     }

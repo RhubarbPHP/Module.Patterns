@@ -32,7 +32,19 @@ use Rhubarb\Stem\Schema\SolutionSchema;
 
 class CrudView extends HtmlView
 {
-    public $newModel = true;
+    protected $title;
+    protected $newModel = true;
+
+    public function __construct()
+    {
+        $this->attachEventHandler("SetTitle", function ($title) {
+            $this->title = $title;
+        });
+
+        $this->attachEventHandler("SetNewModel", function ($newModel) {
+            $this->newModel = $newModel;
+        });
+    }
 
     public function createPresenters()
     {

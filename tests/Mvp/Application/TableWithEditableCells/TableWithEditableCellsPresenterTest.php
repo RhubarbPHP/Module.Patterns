@@ -16,13 +16,13 @@ class TableWithEditableCellsPresenterTest extends RhubarbTestCase
 {
     public function testEditablePresenterColumnCreatedWhenGivenAPresenter()
     {
-        $table = new MyEditableTable(Example::Find());
+        $table = new MyEditableTable(Example::find());
         $table->Columns =
             [
                 new TextBox("Forename")
             ];
 
-        $columns = $table->PublicInflateColumns();
+        $columns = $table->publicInflateColumns();
 
         $this->assertInstanceOf(EditablePresenterColumn::class, $columns[0]);
     }
@@ -31,15 +31,15 @@ class TableWithEditableCellsPresenterTest extends RhubarbTestCase
     {
         $example = new Example();
         $example->Forename = "Andrew";
-        $example->Save();
+        $example->save();
 
-        $table = new MyEditableTable(Example::Find());
+        $table = new MyEditableTable(Example::find());
         $table->Columns =
             [
                 new Template("Empty Column")
             ];
 
-        $response = $table->GenerateResponse();
+        $response = $table->generateResponse();
 
         $this->assertContains("class=\"row-controls\"", $response);
     }
@@ -48,10 +48,10 @@ class TableWithEditableCellsPresenterTest extends RhubarbTestCase
     {
         $example = new Example();
         $example->Forename = "Andrew";
-        $example->Save();
+        $example->save();
 
         $host = new MyEditableForm();
-        $response = $host->GenerateResponse();
+        $response = $host->generateResponse();
 
         $this->assertContains("data-value=\"&quot;Andrew&quot;\"", $response);
         $this->assertContains(">Andrew</td>", $response);
@@ -67,10 +67,10 @@ class TableWithEditableCellsPresenterTest extends RhubarbTestCase
     {
         $example = new Example();
         $example->Forename = "Andrew";
-        $example->Save();
+        $example->save();
 
         $host = new MyEditableForm();
-        $host->GenerateResponse();
+        $host->generateResponse();
 
         $this->assertInstanceOf(ModelColumn::class, MyEditableView::$column->getShadowColumn());
     }
@@ -78,20 +78,20 @@ class TableWithEditableCellsPresenterTest extends RhubarbTestCase
 
 class MyEditableTable extends TableWithEditableCellsPresenter
 {
-    public function PublicGetModelState()
+    public function publicGetModelState()
     {
-        return $this->GetModelState();
+        return $this->getModelState();
     }
 
-    public function PublicInflateColumns()
+    public function publicInflateColumns()
     {
-        return $this->InflateColumns($this->Columns);
+        return $this->inflateColumns($this->Columns);
     }
 }
 
 class MyEditableForm extends Form
 {
-    protected function CreateView()
+    protected function createView()
     {
         return new MyEditableView();
     }
@@ -103,9 +103,9 @@ class MyEditableView extends View
     public static $textbox;
     public static $column;
 
-    public function CreatePresenters()
+    public function createPresenters()
     {
-        self::$table = new TableWithEditableCellsPresenter(Example::Find());
+        self::$table = new TableWithEditableCellsPresenter(Example::find());
         self::$textbox = new TextBox("Forename");
 
         self::$table->Columns =
@@ -113,13 +113,13 @@ class MyEditableView extends View
                 self::$column = new EditablePresenterColumn(self::$textbox)
             ];
 
-        $this->AddPresenters(
+        $this->addPresenters(
             self::$table,
             self::$textbox
         );
     }
 
-    protected function PrintViewContent()
+    protected function printViewContent()
     {
         print self::$table;
     }
