@@ -126,7 +126,7 @@ class CrudView extends HtmlView
                     $pageSettings->pageTitle = $action . ' ' . $this->getEntityName() . $label;
                 }
             } elseif ($restModel instanceof Collection) {
-                $pageSettings->pageTitle = StringTools::pluralise($this->getEntityName(), 2);
+                $pageSettings->pageTitle = StringTools::makePluralWithQuantity($this->getEntityName(), 2);
             }
         }
     }

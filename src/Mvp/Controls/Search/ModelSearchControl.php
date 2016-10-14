@@ -74,7 +74,8 @@ class ModelSearchControl extends SearchControl
 
         $class = $this->modelClassName;
 
-        $list = new Collection($class);
+        /** @var Collection $list */
+        $list = $class::all();
         $filter = $this->getCollectionFilter($this->Phrase);
 
         $list->filter($filter);

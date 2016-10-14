@@ -18,7 +18,6 @@
 
 namespace Rhubarb\Patterns\Mvp\Application\TableWithEditableRows;
 
-use Rhubarb\Leaf\Presenters\Application\Table\Columns\ISortableColumn;
 use Rhubarb\Leaf\Presenters\Application\Table\Table;
 use Rhubarb\Stem\Models\Model;
 
@@ -47,6 +46,5 @@ abstract class TableWithEditableRowsPresenter extends Table
      * @param Model $model
      * @return string[]
      */
-    protected abstract function getClientSideDataForModel(Model $model);
-
+    abstract protected function getClientSideDataForModel(Model $model);
 }

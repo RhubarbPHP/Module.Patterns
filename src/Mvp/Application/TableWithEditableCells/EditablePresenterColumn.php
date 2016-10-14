@@ -19,13 +19,15 @@
 namespace Rhubarb\Patterns\Mvp\Application\TableWithEditableCells;
 
 use Rhubarb\Leaf\Presenters\Application\Table\Columns\PresenterColumn;
+use Rhubarb\Leaf\Presenters\Application\Table\Columns\SortableColumn;
 use Rhubarb\Leaf\Presenters\Application\Table\Columns\TableColumn;
 use Rhubarb\Leaf\Presenters\Presenter;
 use Rhubarb\Stem\Models\Model;
 
 class EditablePresenterColumn extends PresenterColumn
 {
-    private $shadowColumn = false;
+    /** @var SortableColumn|TableColumn */
+    private $shadowColumn = null;
 
     public function __construct(Presenter $presenter, $label = "")
     {
@@ -38,7 +40,7 @@ class EditablePresenterColumn extends PresenterColumn
     }
 
     /**
-     * @param TableColumn $shadowColumn
+     * @param SortableColumn $shadowColumn
      */
     public function setShadowColumn($shadowColumn)
     {
@@ -46,7 +48,7 @@ class EditablePresenterColumn extends PresenterColumn
     }
 
     /**
-     * @return TableColumn
+     * @return SortableColumn
      */
     public function getShadowColumn()
     {

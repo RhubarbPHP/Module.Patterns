@@ -8,5 +8,4 @@ class ModelSearchOrAddInSituPresenter extends ModelSearchOrAddPresenter
     {
         return new ModelSearchOrAddInSituView($this->addPresenter);
     }
-
 }

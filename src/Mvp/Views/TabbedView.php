@@ -46,7 +46,7 @@ trait TabbedView
 
         $tabsId = (self::$useCount > 1) ? uniqid() : "";
 
-        ResourceLoader::addScriptCodeOnReady(
+        ResourceLoader::addScriptCode(
             "$( function()
 			{
 				$( '#tabs{$tabsId}' ).simpleTabs(

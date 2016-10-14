@@ -18,7 +18,6 @@
 
 namespace Rhubarb\Patterns\Mvp\Application\TableWithEditableCells;
 
-use Rhubarb\Leaf\Presenters\Application\Table\Columns;
 use Rhubarb\Leaf\Presenters\Application\Table\Table;
 use Rhubarb\Leaf\Presenters\SpawnableByViewBridgePresenter;
 
