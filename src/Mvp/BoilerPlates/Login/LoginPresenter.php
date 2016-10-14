@@ -18,6 +18,7 @@
 
 namespace Rhubarb\Patterns\Mvp\BoilerPlates\Login;
 
+use Rhubarb\Crown\DependencyInjection\Container;
 use Rhubarb\Crown\Exceptions\ForceResponseException;
 use Rhubarb\Crown\LoginProviders\Exceptions\LoginDisabledException;
 use Rhubarb\Crown\LoginProviders\Exceptions\LoginFailedException;
@@ -38,12 +39,25 @@ abstract class LoginPresenter extends Form
     {
         parent::__construct();
 
-        if ($loginProviderClassName == null) {
-            $loginProviderClassName = LoginProvider::getDefaultLoginProviderClassName();
-        }
-
         $this->loginProviderClassName = $loginProviderClassName;
         $this->usernameColumnName = $usernameColumnName;
+    }
+
+    protected function initialiseModel()
+    {
+        parent::initialiseModel();
+
+        if (isset($_GET["rd"])) {
+            $this->model->RedirectUrl = $_GET["rd"];
+        }
+    }
+
+    protected function getPublicModelPropertyList()
+    {
+        $list = parent::getPublicModelPropertyList();
+        $list[] = "RedirectUrl";
+
+        return $list;
     }
 
     protected function createView()
@@ -58,16 +72,48 @@ abstract class LoginPresenter extends Form
      */
     private function getLoginProvider()
     {
-        $provider = $this->loginProviderClassName;
+        if (!$this->loginProviderClassName) {
+            return Container::instance(LoginProvider::class);
+        }
 
+        $provider = $this->loginProviderClassName;
         return new $provider();
     }
 
     protected function onSuccess()
     {
-        $response = new RedirectResponse("/");
+        if (isset($this->model->RedirectUrl)) {
+            $url = base64_decode($this->model->RedirectUrl);
 
-        throw new ForceResponseException($response);
+            if ($url) {
+                throw new ForceResponseException(new RedirectResponse($url));
+            }
+        }
+
+        throw new ForceResponseException(new RedirectResponse($this->getDefaultSuccessUrl()));
+    }
+
+    protected function getDefaultSuccessUrl()
+    {
+        return "/";
+    }
+
+    /**
+     * Called just before the view is rendered.
+     *
+     * Guaranteed to only be called once during a normal page execution.
+     */
+    protected function beforeRenderView()
+    {
+        $login = $this->getLoginProvider();
+
+        if (isset($_GET["logout"])) {
+            $login->logOut();
+        }
+
+        if ( $login->isLoggedIn() ){
+            $this->onSuccess();
+        }
     }
 
     protected function configureView()
@@ -85,6 +131,12 @@ abstract class LoginPresenter extends Form
                     $usernameColumn = $this->usernameColumnName;
 
                     if ($login->login($this->$usernameColumn, $this->Password)) {
+
+                        if ($this->model["RememberMe"]) {
+                            $login = $this->getLoginProvider();
+                            $login->rememberLogin();
+                        }
+
                         $this->onSuccess();
                     }
                 } catch (LoginDisabledException $er) {

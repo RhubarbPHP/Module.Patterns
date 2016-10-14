@@ -24,6 +24,7 @@ use Rhubarb\Crown\String\StringTools;
 use Rhubarb\Leaf\Presenters\Controls\Buttons\Button;
 use Rhubarb\Leaf\Presenters\Forms\MvpRestBoundForm;
 use Rhubarb\Leaf\Presenters\Presenter;
+use Rhubarb\Stem\Models\Validation\Validator;
 use Rhubarb\Stem\Schema\SolutionSchema;
 
 class ModelFormPresenter extends MvpRestBoundForm
@@ -105,6 +106,12 @@ class ModelFormPresenter extends MvpRestBoundForm
         $this->redirectAfterCancel();
     }
 
+    protected function delete()
+    {
+        $this->restModel->delete();
+        $this->redirectAfterSave();
+    }
+
     protected function onPresenterAdded(Presenter $presenter)
     {
         if ($presenter->getName() == "Save") {
@@ -130,7 +137,7 @@ class ModelFormPresenter extends MvpRestBoundForm
         $this->view->attachEventHandler(
             "GetRestModel",
             function () {
-                return $this->restModel;
+                return $this->getRestModel();
             }
         );
 
@@ -145,6 +152,13 @@ class ModelFormPresenter extends MvpRestBoundForm
             "CancelPressed",
             function () {
                 $this->cancel();
+            }
+        );
+
+        $this->view->attachEventHandler(
+            "DeletePressed",
+            function () {
+                $this->delete();
             }
         );
     }

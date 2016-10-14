@@ -50,11 +50,11 @@ class LoginView extends HtmlView
         <?php
 
         if ($this->failed) {
-            print "<div class='alert--error'>Sorry, this username and password combination could not be found, please check and try again.</div>";
+            print "<div class='c-alert c-alert--error'>Sorry, this username and password combination could not be found, please check and try again.</div>";
         }
 
         ?>
-        <fieldset class="form -horizontal">
+        <fieldset class="c-form c-form--inline">
 
             <?php
 
@@ -62,20 +62,20 @@ class LoginView extends HtmlView
 
             ?>
 
-            <div class="field-group">
-                <div class="form__inputs"><?= $this->presenters[$this->usernameColumnName]; ?></div>
-                <label class="form__label"><?= $this->usernameColumnName; ?>: </label>
+            <div class="c-form__group">
+                <label class="c-form__label"><?= $this->usernameColumnName; ?></label>
+                <?= $this->presenters[$this->usernameColumnName]; ?>
             </div>
-            <div class="field-group">
-                <div class="form__inputs"><?= $this->presenters["Password"]; ?></div>
-                <label class="form__label">Password:</label>
+            <div class="c-form__group">
+                <label class="c-form__label">Password</label>
+                <?= $this->presenters["Password"]; ?>
             </div>
 
             <?php
             $this->printAdditionalBeforeButton();
             ?>
 
-            <div class="form-actions">
+            <div class="c-form__actions">
                 <?= $this->presenters["Login"]; ?>
             </div>
 

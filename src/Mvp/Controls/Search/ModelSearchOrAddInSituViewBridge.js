@@ -1,5 +1,12 @@
 var bridge = function (presenterPath) {
     window.rhubarb.viewBridgeClasses.SearchControl.apply(this, arguments);
+
+    this.searchInterface = $(this.viewNode.children[0]);
+    this.addInterface = $(this.viewNode.children[1]);
+};
+
+searchControl.prototype.attachSearchInterfaceToDom = function(){
+    $(this.viewNode.children[0]).append(this.interfaceContainer);
 };
 
 bridge.prototype = new window.rhubarb.viewBridgeClasses.SearchControl();
@@ -25,7 +32,8 @@ bridge.prototype.attachEvents = function () {
         });
 
         this.addButton.click(function () {
-            self.findChildViewBridge("Add").clearAndShow();
+            self.addInterface.show();
+            self.searchInterface.hide();
         });
     }
 };
@@ -53,4 +61,4 @@ bridge.prototype.updateUiState = function () {
     }
 };
 
-window.rhubarb.viewBridgeClasses.ModelSearchOrAddViewBridge = bridge;
+window.rhubarb.viewBridgeClasses.ModelSearchOrAddInSituViewBridge = bridge;

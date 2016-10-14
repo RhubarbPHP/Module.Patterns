@@ -20,12 +20,15 @@ namespace Rhubarb\Patterns\Mvp\Crud;
 
 use Rhubarb\Crown\Settings\HtmlPageSettings;
 use Rhubarb\Crown\String\StringTools;
+use Rhubarb\Crown\UrlHandlers\UrlHandler;
 use Rhubarb\Leaf\Presenters\Controls\Buttons\Button;
+use Rhubarb\Leaf\UrlHandlers\MvpRestHandler;
 use Rhubarb\Leaf\Views\HtmlView;
 use Rhubarb\Patterns\Mvp\Controls\Buttons\PrimaryButton;
 use Rhubarb\Patterns\Mvp\Controls\Buttons\WarningButton;
 use Rhubarb\Stem\Collections\Collection;
 use Rhubarb\Stem\Models\Model;
+use Rhubarb\Stem\Schema\SolutionSchema;
 
 class CrudView extends HtmlView
 {
@@ -59,6 +62,29 @@ class CrudView extends HtmlView
         parent::createPresenters();
     }
 
+    /**
+     * Override this to provide a name for the real world entity being manipulated.
+     * @return string
+     */
+    protected function getEntityName()
+    {
+        $restModel = $this->raiseEvent("GetRestModel");
+
+        if ($restModel instanceof Model) {
+            return StringTools::wordifyStringByUpperCase(
+                SolutionSchema::getModelNameFromClass(get_class($restModel))
+            );
+        }
+
+        if ($restModel instanceof Collection) {
+            return StringTools::wordifyStringByUpperCase(
+                SolutionSchema::getModelNameFromClass($restModel->getModelClassName())
+            );
+        }
+
+        return "";
+    }
+
     protected function onBeforePrintViewContent()
     {
         parent::onBeforePrintViewContent();
@@ -66,18 +92,45 @@ class CrudView extends HtmlView
         $restModel = $this->raiseEvent("GetRestModel");
 
         if (is_object($restModel)) {
-            $pageSettings = new HtmlPageSettings();
+            $pageSettings = HtmlPageSettings::singleton();
 
             if ($restModel instanceof Model) {
                 if ($restModel->isNewRecord()) {
-                    $pageSettings->PageTitle = "Add a " . $restModel->getModelName();
+                    $pageSettings->pageTitle = "Add a " . $this->getEntityName();
                 } else {
-                    $pageSettings->PageTitle = "Editing " . $restModel->getModelName() . " '" . $restModel->getLabel(
-                        ) . "'";
+                    $urlHandler = UrlHandler::getExecutingUrlHandler();
+
+                    if ($urlHandler instanceof MvpRestHandler) {
+                        $action = $this->describeUrlAction($urlHandler->getUrlAction());
+                    } else {
+                        $action = "Editing ";
+                    }
+
+                    $label = $restModel->getLabel();
+                    if ($label) {
+                        $label = ': ' . $label;
+                    }
+
+                    $pageSettings->pageTitle = $action . ' ' . $this->getEntityName() . $label;
                 }
             } elseif ($restModel instanceof Collection) {
-                $pageSettings->PageTitle = StringTools::pluralise($restModel->getModelName(), 2);
+                $pageSettings->pageTitle = StringTools::pluralise($this->getEntityName(), 2);
             }
         }
+    }
+
+    protected function describeUrlAction($action)
+    {
+        if (is_numeric($action)) {
+            $action = '';
+        } else {
+            if (empty($action) || $action == 'edit') {
+                $action = 'Editing ';
+            } else {
+                $action .= ' ';
+            }
+        }
+
+        return $action;
     }
 }

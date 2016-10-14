@@ -18,52 +18,51 @@
 
 namespace Rhubarb\Patterns\Mvp\Application\TableWithEditableCells;
 
-use Rhubarb\Stem\Decorators\DataDecorator;
-use Rhubarb\Stem\Models\Model;
 use Rhubarb\Leaf\Presenters\Application\Table\Columns\PresenterColumn;
 use Rhubarb\Leaf\Presenters\Application\Table\Columns\TableColumn;
 use Rhubarb\Leaf\Presenters\Presenter;
+use Rhubarb\Stem\Models\Model;
 
 class EditablePresenterColumn extends PresenterColumn
 {
-	private $shadowColumn = false;
+    private $shadowColumn = false;
 
-	public function __construct( Presenter $presenter, $label = "" )
-	{
-		parent::__construct( $presenter, $label );
-	}
+    public function __construct(Presenter $presenter, $label = "")
+    {
+        parent::__construct($presenter, $label);
+    }
 
-	public function GetSortableColumnName()
-	{
-		return $this->shadowColumn->getSortableColumnName();
-	}
+    public function GetSortableColumnName()
+    {
+        return $this->shadowColumn->getSortableColumnName();
+    }
 
-	/**
-	 * @param TableColumn $shadowColumn
-	 */
-	public function setShadowColumn( $shadowColumn )
-	{
-		$this->shadowColumn = $shadowColumn;
-	}
+    /**
+     * @param TableColumn $shadowColumn
+     */
+    public function setShadowColumn($shadowColumn)
+    {
+        $this->shadowColumn = $shadowColumn;
+    }
 
-	/**
-	 * @return TableColumn
-	 */
-	public function getShadowColumn()
-	{
-		return $this->shadowColumn;
-	}
+    /**
+     * @return TableColumn
+     */
+    public function getShadowColumn()
+    {
+        return $this->shadowColumn;
+    }
 
-	public function getCustomCellAttributes( Model $row )
-	{
-		$attributes = parent::getCustomCellAttributes( $row );
-		$attributes[ "data-value" ] = json_encode( $this->presenter->FetchBoundData() );
+    public function getCustomCellAttributes(Model $row)
+    {
+        $attributes = parent::getCustomCellAttributes($row);
+        $attributes["data-value"] = json_encode($this->presenter->FetchBoundData());
 
-		return $attributes;
-	}
+        return $attributes;
+    }
 
-	protected function getCellValue( Model $row, $decorator )
-	{
-		return $this->shadowColumn->getCellValue( $row, $decorator );
-	}
+    protected function getCellValue(Model $row, $decorator)
+    {
+        return $this->shadowColumn->getCellValue($row, $decorator);
+    }
 }
