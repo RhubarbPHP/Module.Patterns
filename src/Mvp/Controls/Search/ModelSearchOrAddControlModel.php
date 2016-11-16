@@ -21,6 +21,8 @@ use Rhubarb\Leaf\Controls\Common\SelectionControls\SearchControl\SearchControlMo
 
 class ModelSearchOrAddControlModel extends SearchControlModel
 {
+    public $addLeaf;
+    
     public $hasAddPresenter = false;
 
     protected function getExposableModelProperties()

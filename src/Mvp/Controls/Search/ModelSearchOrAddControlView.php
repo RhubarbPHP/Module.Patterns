@@ -24,26 +24,26 @@ use Rhubarb\Leaf\Leaves\LeafDeploymentPackage;
 
 class ModelSearchOrAddControlView extends SearchControlView
 {
-    private $addPresenter;
-
-    public function __construct(Leaf $addPresenter = null)
-    {
-        $this->addPresenter = $addPresenter;
-    }
+    protected $requiresContainerDiv = true;
+    
+    /**
+     * @var $model ModelSearchOrAddControlModel
+     */
+    protected $model;
 
     protected function createSubLeaves()
     {
         parent::createSubLeaves();
 
-        $this->registerSubLeaf($this->addPresenter);
+        $this->registerSubLeaf($this->model->addLeaf);
     }
 
     public function printViewContent()
     {
         parent::printViewContent();
 
-        if ($this->addPresenter != null) {
-            print $this->addPresenter;
+        if ($this->model->addLeaf != null) {
+            print $this->model->addLeaf;
         }
     }
 

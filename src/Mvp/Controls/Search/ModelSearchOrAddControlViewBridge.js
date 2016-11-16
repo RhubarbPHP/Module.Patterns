@@ -12,19 +12,20 @@ bridge.prototype.createDom = function () {
 bridge.prototype.attachEvents = function () {
     window.rhubarb.viewBridgeClasses.SearchControl.prototype.attachEvents.apply(this);
 
-    if (this.model.HasAddPresenter && !this.addButton) {
-        this.addButton = $('<input type="button" value="Add" />');
-        this.buttonsContainer.append(this.addButton);
+    if (this.model.hasAddPresenter && !this.addButton) {
+        this.addButton = document.createElement('input');
+        this.addButton.type = 'button';
+        this.addButton.value = 'Add';
+
+        this.buttonsContainer.appendChild(this.addButton);
 
         var self = this;
 
-        this.waitForPresenters(["Add"], function (addPresenter) {
-            addPresenter.attachClientEventHandler("ItemAdded", function (item) {
-                self.setSelectedItems([item]);
-            });
+        this.findViewBridge("Add").attachClientEventHandler("ItemAdded", function (item) {
+            self.setSelectedItems([item]);
         });
 
-        this.addButton.click(function () {
+        this.addButton.addEventListener('click',function(){
             self.findChildViewBridge("Add").clearAndShow();
         });
     }
@@ -34,20 +35,20 @@ bridge.prototype.updateUiState = function () {
     window.rhubarb.viewBridgeClasses.SearchControl.prototype.updateUiState.apply(this);
 
     if (this.model.hasAddPresenter) {
-        this.addButton.hide();
+        this.addButton.style.display = 'none';
 
         switch (this._state) {
             case "unselected":
-                this.addButton.show();
+                this.addButton.style.display = 'block';
                 break;
             case "searching":
-                this.addButton.show();
+                this.addButton.style.display = 'block';
                 break;
             case "searched":
-                this.addButton.show();
+                this.addButton.style.display = 'block';
                 break;
             case "selected":
-                this.addButton.hide();
+                this.addButton.style.display = 'none';
                 break;
         }
     }

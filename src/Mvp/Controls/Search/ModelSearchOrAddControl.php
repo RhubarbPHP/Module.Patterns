@@ -29,29 +29,34 @@ class ModelSearchOrAddControl extends ModelSearchControl
      */
     protected $model;
 
-    public function __construct($name, $modelClassName, Leaf $addPresenter = null)
+    public function __construct($name, $modelClassName, Leaf $addPresenter)
     {
-        parent::__construct($name, $modelClassName);
+        $this->addPresenter = $addPresenter;
 
+        parent::__construct($name, $modelClassName);
+    }
+
+    protected function onModelCreated()
+    {
         // Rename the presenter to make sure we can simplify how we access it.
-        if ($addPresenter != null) {
-            $addPresenter->setName("Add");
-            $this->addPresenter = $addPresenter;
+        if ($this->addPresenter != null) {
+            $this->addPresenter->setName("Add");
+            $this->model->addLeaf = $this->addPresenter;
             $this->model->hasAddPresenter = true;
         } else {
             $this->model->hasAddPresenter = false;
         }
+
+        parent::onModelCreated();
     }
 
-    protected function getPublicModelPropertyList()
+    protected function createModel()
     {
-        $list = parent::getPublicModelPropertyList();
-        $list[] = "HasAddPresenter";
-        return $list;
+        return new ModelSearchOrAddControlModel();
     }
 
-    protected function createView()
+    protected function getViewClass()
     {
-        return new ModelSearchOrAddControlView($this->addPresenter);
+        return ModelSearchOrAddControlView::class;
     }
 }
