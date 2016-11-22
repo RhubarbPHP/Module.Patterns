@@ -33,17 +33,14 @@ class BaseLayout extends Layout
 
     protected function printHead()
     {
-
     }
 
     protected function printTop()
     {
-
     }
 
     protected function printTail()
     {
-
     }
 
     protected function printContent($content)
@@ -68,6 +65,7 @@ class BaseLayout extends Layout
     protected function printLayout($content)
     {
         ?>
+        <!DOCTYPE html>
         <html>
         <head>
             <title><?= $this->getTitle(); ?></title>
@@ -85,7 +83,6 @@ class BaseLayout extends Layout
         <?php $this->printTail(); ?>
         </body>
         </html>
-    <?php
-
+        <?php
     }
 }
