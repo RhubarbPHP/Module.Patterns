@@ -67,6 +67,11 @@ class ModelSearchControl extends SearchControl
         return parent::convertValueToModel($value);
     }
 
+    protected function sortResultsCollection(Collection $results)
+    {
+
+    }
+
     protected function getCurrentlyAvailableSelectionItems()
     {
         if ($this->model->searchPhrase == "") {
@@ -79,6 +84,7 @@ class ModelSearchControl extends SearchControl
         $filter = $this->getCollectionFilter($this->model->searchPhrase);
 
         $list->filter($filter);
+        $this->sortResultsCollection($list);
 
         $results = [];
 
