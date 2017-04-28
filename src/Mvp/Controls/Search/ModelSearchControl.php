@@ -80,7 +80,7 @@ class ModelSearchControl extends SearchControl
 
         $class = $this->modelClassName;
 
-        $list = new RepositoryCollection($class);
+        $list = $class::all();
         $filter = $this->getCollectionFilter($this->model->searchPhrase);
 
         $list->filter($filter);
