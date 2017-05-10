@@ -31,6 +31,16 @@ class BaseLayout extends Layout
         return $pageSettings->pageTitle;
     }
 
+    protected function getBodyCssClass()
+    {
+        $pageSettings = HtmlPageSettings::singleton();
+
+        if ( $pageSettings->bodyCssClass != "" )
+        {
+            return 'class="'.htmlentities( $pageSettings->bodyCssClass ).'"';
+        }
+    }
+
     protected function printHead()
     {
     }
@@ -75,7 +85,7 @@ class BaseLayout extends Layout
 
             <?php $this->printHead(); ?>
         </head>
-        <body>
+        <body <?=$this->getBodyCssClass();?>>
         <?php $this->printTop(); ?>
         <?= LayoutModule::getBodyItemsAsHtml(); ?>
         <?php $this->printPageHeading(); ?>
