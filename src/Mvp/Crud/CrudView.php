@@ -69,6 +69,7 @@ class CrudView extends HtmlView
             $save->setValidator($validator);
         }
 
+        $delete->setButtonType('button', true);
         $delete->setConfirmMessage("Are you sure you want to delete this item?");
 
         parent::createPresenters();
