@@ -72,12 +72,8 @@ class ModelSearchControl extends SearchControl
 
     }
 
-    protected function getCurrentlyAvailableSelectionItems()
+    protected function createCollection()
     {
-        if ($this->model->searchPhrase == "") {
-            return [];
-        }
-
         $class = $this->modelClassName;
 
         $list = $class::all();
@@ -85,6 +81,17 @@ class ModelSearchControl extends SearchControl
 
         $list->filter($filter);
         $this->sortResultsCollection($list);
+
+        return $list;
+    }
+    
+    protected function getCurrentlyAvailableSelectionItems()
+    {
+        if ($this->model->searchPhrase == "") {
+            return [];
+        }
+
+        $list = $this->createCollection();
 
         $results = [];
 
