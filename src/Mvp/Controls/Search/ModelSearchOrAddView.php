@@ -25,7 +25,7 @@ class ModelSearchOrAddView extends SearchControlView
 {
     private $addPresenter;
 
-    public function __construct(Presenter $addPresenter = null)
+    public function __construct(?Presenter $addPresenter = null)
     {
         $this->addPresenter = $addPresenter;
     }

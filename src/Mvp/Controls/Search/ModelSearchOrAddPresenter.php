@@ -24,7 +24,7 @@ class ModelSearchOrAddPresenter extends ModelSearchControl
 {
     protected $addPresenter;
 
-    public function __construct($name, $modelClassName, Presenter $addPresenter = null)
+    public function __construct($name, $modelClassName, ?Presenter $addPresenter = null)
     {
         parent::__construct($name, $modelClassName);
 
